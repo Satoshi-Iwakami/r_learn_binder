@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>データ分析入門</title>
+<title>データ分析入門 - 7&nbsp; 分類問題に挑戦</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -30,7 +64,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./intro.html" rel="next">
+<link href="./exercise.html" rel="next">
+<link href="./regression.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -42,11 +77,6 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
-<link href="site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
-<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
-<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
-<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -88,7 +118,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="サイドバーを切り替える" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">前書き</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./regression.html">発展</a></li><li class="breadcrumb-item"><a href="./classification.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">分類問題に挑戦</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="サイドバーを切り替える" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -119,7 +149,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">前書き</span></a>
   </div>
 </li>
@@ -181,7 +211,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./classification.html" class="sidebar-item-text sidebar-link">
+  <a href="./classification.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">分類問題に挑戦</span></span></a>
   </div>
 </li>
@@ -220,19 +250,18 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">目次</h2>
    
   <ul>
-  <li><a href="#前書き" id="toc-前書き" class="nav-link active" data-scroll-target="#前書き">前書き</a>
-  <ul class="collapse">
-  <li><a href="#rコードおよび実行環境" id="toc-rコードおよび実行環境" class="nav-link" data-scroll-target="#rコードおよび実行環境"><i class="fa-brands fa-r-project" aria-label="r-project"></i> Rコードおよび実行環境</a></li>
-  </ul></li>
+  <li><a href="#ロジスティック回帰" id="toc-ロジスティック回帰" class="nav-link active" data-scroll-target="#ロジスティック回帰"><span class="header-section-number">7.1</span> ロジスティック回帰</a></li>
+  <li><a href="#主成分分析" id="toc-主成分分析" class="nav-link" data-scroll-target="#主成分分析"><span class="header-section-number">7.2</span> 主成分分析</a></li>
+  <li><a href="#クラスタリング" id="toc-クラスタリング" class="nav-link" data-scroll-target="#クラスタリング"><span class="header-section-number">7.3</span> クラスタリング</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./regression.html">発展</a></li><li class="breadcrumb-item"><a href="./classification.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">分類問題に挑戦</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">データ分析入門</h1>
+<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">分類問題に挑戦</span></h1>
 </div>
 
 
@@ -249,33 +278,53 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="前書き" class="level1 unnumbered">
-<h1 class="unnumbered">前書き</h1>
-<p>コースは基礎編と発展編の2つに分けられます。基礎編では、データ分析に必要な知識・背景の理解のための 素養を身につけることを目指します。発展編ではデータ分析の問題への挑戦として、回帰と分類問題について 取り組みます。 このコースでは、基礎から発展まで通して<i class="fa-brands fa-r-project" aria-label="r-project"></i> <a href="http://cran.r-project.org">R言語</a>を使ったデータ分析を行います。</p>
-<p>まずデータ分析についての大まかな内容とデータ分析で扱われる課題について<a href="./intro.html">第1章</a>で学びます。 次に<a href="./data.html">第2章</a>では、データの種類と扱い方、表現方法を身につけます。 <a href="./summary_statistics.html">第3章</a>ではデータを<ruby>要約<rt>ようやく</rt></ruby>し、伝えやすくするための方法を紹介します。 ここでは特に１つの<ruby>変数<rt>へんすう</rt></ruby>について扱います。 <a href="./correlation.html">第4章</a>は２つの変数の関係を調べるための相関について理解を深めます。 基礎編の最終章となる<a href="./visualization.html">第5章</a>では、データ分析に欠かせないデータのグラフ化、可視化のノウハウを学びます。 ここでは一般的な統計グラフの他に地図による表現についても紹介します。 続く発展編では、<a href="./regression.html">回帰</a>と<a href="./classification.html">分類</a>についてそれぞれ課題を設定し、Rによるプログラミングとその出力の理解を目指します。</p>
-<section id="rコードおよび実行環境" class="level2">
-<h2 class="anchored" data-anchor-id="rコードおよび実行環境"><i class="fa-brands fa-r-project" aria-label="r-project"></i> Rコードおよび実行環境</h2>
-<ul>
-<li>R version 4.2.3</li>
-<li>macOS Ventura 13.4</li>
-</ul>
-<p>このページは<a href="https://quarto.org">Quarto</a>を使って作成されています。</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://mybinder.org/badge_logo.svg" class="img-fluid figure-img"></p>
-<figcaption>Binder</figcaption>
-</figure>
+<div class="cell">
+<details class="code-fold">
+<summary>コードを表示</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'dplyr'</code></pre>
 </div>
-<p>このコースで扱っているRプログラムの内容は、binderによってウェブブラウザ上で試せます。 上記のボタンをクリックすることでbinder上のRStduio Serverが起動します。 （起動に時間がかかることがあります） これによりブラウザ上でRを動かすことができます。 必要なデータ、パッケージはすでにインストールされている状態です。 資料のqmdファイルを開き、内容をなぞる、変更してRを動かしてみてください。 ウェブブラウザで行った変更はブラウザを閉じるとリセットされます。</p>
-<p>ページ中のRのコードは下記のようにコードブロックで表示しています。 このコードブロックは右上にカーソルを移動させたときに表示されるアイコンをクリックすることで 内容がコピーされます。また、一部のコードについては非表示の状態のものもあります。 <code>コードを表示</code>とある場合、クリックによってコードが表示されます。</p>
-<p><a href="images/code_block.gif" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="images/code_block.gif" class="img-fluid"></a></p>
-<p>renvによるパッケージ管理、GitHub actionsによるページのビルドを行っています。</p>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
 
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
 
-<div class="hidden" aria-hidden="true">
-<span class="glightbox-desc lightbox-desc-1">Binder</span>
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+</div>
+<section id="ロジスティック回帰" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="ロジスティック回帰"><span class="header-section-number">7.1</span> ロジスティック回帰</h2>
+</section>
+<section id="主成分分析" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="主成分分析"><span class="header-section-number">7.2</span> 主成分分析</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>コードを表示</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">subset</span>(df_zoo, <span class="at">select =</span> <span class="fu">c</span>(body_length_cm, weight_kg)) <span class="sc">|&gt;</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(body_length_cm)) <span class="sc">|&gt;</span> </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prcomp</span>(<span class="at">scale. =</span> <span class="cn">TRUE</span>)</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Standard deviations (1, .., p=2):
+[1] 1.3577273 0.3956975
+
+Rotation (n x k) = (2 x 2):
+                     PC1        PC2
+body_length_cm 0.7071068 -0.7071068
+weight_kg      0.7071068  0.7071068</code></pre>
+</div>
 </div>
 </section>
+<section id="クラスタリング" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="クラスタリング"><span class="header-section-number">7.3</span> クラスタリング</h2>
+
+
 </section>
 
 </main> <!-- /main -->
@@ -812,39 +861,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./regression.html" class="pagination-link" aria-label="回帰問題に挑戦">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">回帰問題に挑戦</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./intro.html" class="pagination-link" aria-label="はじめに">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">はじめに</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./exercise.html" class="pagination-link" aria-label="練習問題の答えと解説">
+        <span class="nav-page-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">練習問題の答えと解説</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","selector":".lightbox","descPosition":"bottom","loop":false,"closeEffect":"zoom"});
-window.onload = () => {
-  lightboxQuarto.on('slide_before_load', (data) => {
-    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-    const href = trigger.getAttribute('href');
-    if (href !== null) {
-      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
-      if (imgEl !== null) {
-        const srcAttr = imgEl.getAttribute("src");
-        if (srcAttr && srcAttr.startsWith("data:")) {
-          slideConfig.href = srcAttr;
-        }
-      }
-    } 
-  });
-
-  lightboxQuarto.on('slide_after_load', (data) => {
-    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-    if (window.Quarto?.typesetMath) {
-      window.Quarto.typesetMath(slideNode);
-    }
-  });
-
-};
-          </script>
 
 
 

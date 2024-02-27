@@ -229,12 +229,35 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
- <span class="menu-text">付録</span></a>
+ <span class="menu-text">発展</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="セクションを切り替え">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">回帰問題に挑戦</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">分類問題に挑戦</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">付録</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="セクションを切り替え">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./exercise.html" class="sidebar-item-text sidebar-link">
@@ -410,7 +433,7 @@ window.Quarto = {
 <div id="fig-average_outlier" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-average_outlier-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="images/average_outlier.png" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="quarto-lightbox-gallery-1"><img src="images/average_outlier.png" class="img-fluid figure-img"></a>
+<a href="images/average_outlier.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" data-glightbox="description: .lightbox-desc-1"><img src="images/average_outlier.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-average_outlier-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 図&nbsp;3.1: 平均値は外れ値の影響を受けやすい
@@ -465,7 +488,7 @@ window.Quarto = {
 <div id="fig-quantile_explain" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-quantile_explain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="images/quantile_explain.png" class="lightbox" data-glightbox="description: .lightbox-desc-2" data-gallery="quarto-lightbox-gallery-2"><img src="images/quantile_explain.png" class="img-fluid figure-img"></a>
+<a href="images/quantile_explain.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" data-glightbox="description: .lightbox-desc-2"><img src="images/quantile_explain.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-quantile_explain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 図&nbsp;3.2: 四分位点のイメージ
@@ -727,7 +750,7 @@ pp. 120-121
 <p><strong>標準偏差を求める際に平方根を利用する理由は、分散を求めたときに2乗したものを元に戻すため</strong>です。 具体的には2乗した場合に単位が変わってしまうものを元に戻す必要があるためです。 例えば、長さの単位としてセンチメートルで測ったものならば平方センチメートルとなり、面積の単位になってしまうのを防ぐ効果があります。</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="images/variance_table.png" class="lightbox" data-glightbox="description: .lightbox-desc-3" data-gallery="quarto-lightbox-gallery-3" title="標準偏差を導くまでの過程"><img src="images/variance_table.png" class="img-fluid figure-img" alt="標準偏差を導くまでの過程"></a></p>
+<p><a href="images/variance_table.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" data-glightbox="description: .lightbox-desc-3" title="標準偏差を導くまでの過程"><img src="images/variance_table.png" class="img-fluid figure-img" alt="標準偏差を導くまでの過程"></a></p>
 <figcaption>標準偏差を導くまでの過程</figcaption>
 </figure>
 </div>
@@ -742,7 +765,7 @@ pp. 120-121
 <p>動物のデータセットの分類群を例にすると、<code>df_zoo$taxon</code>で分類群の値（霊長類や鳥類）を確認し、各値をカウントして度数を求め、それを分類群ごとに集約するという手順をとります。</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="images/animal_species_count.png" class="lightbox" data-glightbox="description: .lightbox-desc-4" data-gallery="quarto-lightbox-gallery-4" title="分類群ごとに何種類の動物がいるか数えてみよう"><img src="images/animal_species_count.png" class="img-fluid figure-img" alt="分類群ごとに何種類の動物がいるか数えてみよう"></a></p>
+<p><a href="images/animal_species_count.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" data-glightbox="description: .lightbox-desc-4" title="分類群ごとに何種類の動物がいるか数えてみよう"><img src="images/animal_species_count.png" class="img-fluid figure-img" alt="分類群ごとに何種類の動物がいるか数えてみよう"></a></p>
 <figcaption>分類群ごとに何種類の動物がいるか数えてみよう</figcaption>
 </figure>
 </div>
@@ -908,7 +931,7 @@ pp. 120-121
 <div id="fig-histogram_for_body_mass_g" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-histogram_for_body_mass_g-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="summary_statistics_files/figure-html/fig-histogram_for_body_mass_g-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-5" data-gallery="quarto-lightbox-gallery-5"><img src="summary_statistics_files/figure-html/fig-histogram_for_body_mass_g-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="summary_statistics_files/figure-html/fig-histogram_for_body_mass_g-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" data-glightbox="description: .lightbox-desc-5"><img src="summary_statistics_files/figure-html/fig-histogram_for_body_mass_g-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-histogram_for_body_mass_g-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 図&nbsp;3.3: ペンギンの体重のヒストグラム
@@ -946,7 +969,7 @@ pp. 120-121
 <div id="fig-histogram_for_body_mass_g_annotate" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-histogram_for_body_mass_g_annotate-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="summary_statistics_files/figure-html/fig-histogram_for_body_mass_g_annotate-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-6" data-gallery="quarto-lightbox-gallery-6"><img src="summary_statistics_files/figure-html/fig-histogram_for_body_mass_g_annotate-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="summary_statistics_files/figure-html/fig-histogram_for_body_mass_g_annotate-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" data-glightbox="description: .lightbox-desc-6"><img src="summary_statistics_files/figure-html/fig-histogram_for_body_mass_g_annotate-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-histogram_for_body_mass_g_annotate-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 図&nbsp;3.4: ペンギンの体重のヒストグラムと代表値の関係
@@ -978,7 +1001,7 @@ pp. 120-121
 <div id="fig-histogram_bins" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-histogram_bins-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="summary_statistics_files/figure-html/fig-histogram_bins-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-7" data-gallery="quarto-lightbox-gallery-7"><img src="summary_statistics_files/figure-html/fig-histogram_bins-1.png" class="img-fluid figure-img" width="960"></a>
+<a href="summary_statistics_files/figure-html/fig-histogram_bins-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" data-glightbox="description: .lightbox-desc-7"><img src="summary_statistics_files/figure-html/fig-histogram_bins-1.png" class="img-fluid figure-img" width="960"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-histogram_bins-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 図&nbsp;3.5: 階級数によってヒストグラムの見た目は変わる
@@ -1032,7 +1055,7 @@ pp. 120-121
 <div id="fig-how_to_make_boxplot" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-how_to_make_boxplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="images/how_to_make_boxplot.png" class="lightbox" data-glightbox="description: .lightbox-desc-8" data-gallery="quarto-lightbox-gallery-8"><img src="images/how_to_make_boxplot.png" class="img-fluid figure-img"></a>
+<a href="images/how_to_make_boxplot.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8" data-glightbox="description: .lightbox-desc-8"><img src="images/how_to_make_boxplot.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-how_to_make_boxplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 図&nbsp;3.6: 箱ヒゲ図の見方と作り方
@@ -1050,7 +1073,7 @@ pp. 120-121
 <div id="fig-zoo_body_length_boxplot" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-zoo_body_length_boxplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="summary_statistics_files/figure-html/fig-zoo_body_length_boxplot-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-9" data-gallery="quarto-lightbox-gallery-9"><img src="summary_statistics_files/figure-html/fig-zoo_body_length_boxplot-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="summary_statistics_files/figure-html/fig-zoo_body_length_boxplot-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9" data-glightbox="description: .lightbox-desc-9"><img src="summary_statistics_files/figure-html/fig-zoo_body_length_boxplot-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-zoo_body_length_boxplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 図&nbsp;3.7: 動物データの体重の箱ヒゲ図
@@ -1080,7 +1103,7 @@ pp. 120-121
 <div id="fig-zoo_body_length_boxplot_by_taxon" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-zoo_body_length_boxplot_by_taxon-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="summary_statistics_files/figure-html/fig-zoo_body_length_boxplot_by_taxon-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-10" data-gallery="quarto-lightbox-gallery-10"><img src="summary_statistics_files/figure-html/fig-zoo_body_length_boxplot_by_taxon-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="summary_statistics_files/figure-html/fig-zoo_body_length_boxplot_by_taxon-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10" data-glightbox="description: .lightbox-desc-10"><img src="summary_statistics_files/figure-html/fig-zoo_body_length_boxplot_by_taxon-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-zoo_body_length_boxplot_by_taxon-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 図&nbsp;3.8: 動物データの分類群ごとの体長の箱ヒゲ図。箱ヒゲ図を並べて描画することで複数のデータを比較しやすくなります。
@@ -1693,7 +1716,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
 </nav>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","openEffect":"zoom","loop":false,"descPosition":"bottom","selector":".lightbox"});
+<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","closeEffect":"zoom","selector":".lightbox","loop":false,"openEffect":"zoom"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;

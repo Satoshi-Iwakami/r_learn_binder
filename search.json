@@ -367,6 +367,83 @@
     ]
   },
   {
+    "objectID": "regression.html",
+    "href": "regression.html",
+    "title": "6  回帰問題に挑戦",
+    "section": "",
+    "text": "6.1 単回帰モデル\n線形回帰のうち、説明変数が一つの場合を単回帰といいます。 これに対して複数の説明変数によって目的変数の挙動を推定する線形回帰を重回帰と呼びますが、これについては本書では扱いません。 単回帰の基礎を抑えることで、重回帰への理解も深まります。\nコードを表示\nlm_res &lt;-\n  lm(weight_kg ~ body_length_cm, data = df_zoo)\nlm_res\n\n\n\nCall:\nlm(formula = weight_kg ~ body_length_cm, data = df_zoo)\n\nCoefficients:\n   (Intercept)  body_length_cm  \n       -72.574           1.324  \n\n\nコードを表示\nsummary(lm_res)\n\n\n\nCall:\nlm(formula = weight_kg ~ body_length_cm, data = df_zoo)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-90.587 -37.539  -6.151  25.768 151.495 \n\nCoefficients:\n               Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)    -72.5743    26.0890  -2.782   0.0133 *  \nbody_length_cm   1.3243     0.2109   6.280  1.1e-05 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 61.48 on 16 degrees of freedom\n  (4 observations deleted due to missingness)\nMultiple R-squared:  0.7114,    Adjusted R-squared:  0.6933 \nF-statistic: 39.43 on 1 and 16 DF,  p-value: 1.098e-05",
+    "crumbs": [
+      "発展",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>回帰問題に挑戦</span>"
+    ]
+  },
+  {
+    "objectID": "regression.html#単回帰モデル",
+    "href": "regression.html#単回帰モデル",
+    "title": "6  回帰問題に挑戦",
+    "section": "",
+    "text": "6.1.1 最小二乗法\n回帰直線によって２つの変数の関係をどの程度表現できているかを示す指標\n\n回帰直線からの差（残差）\n残差が小さいほど予測がうまく行っている\n\n残差を２乗し平均をとる –&gt; 残差分散。値が小さいほど回帰直線による予測がうまくいくことを示す\n次に示すのは南極大陸に生育するペンギンの大きさを調べた観測データです。 それぞれの変数は次の意味をもちます（詳細は付録のデータセットを参照してください）。\n\nbill_length_mm: 口ばしの長さ。単位はミリメートル\nbody_mass_g: 体重。単位はグラム\n\nlm()関数\n\n\nコードを表示\nlm_res &lt;-\n  lm(formula = body_mass_g ~ bill_length_mm, data = penguins)\n\nlm_res\n\n\n\nCall:\nlm(formula = body_mass_g ~ bill_length_mm, data = penguins)\n\nCoefficients:\n   (Intercept)  bill_length_mm  \n        362.31           87.42  \n\n\nコードを表示\nsummary(lm_res)\n\n\n\nCall:\nlm(formula = body_mass_g ~ bill_length_mm, data = penguins)\n\nResiduals:\n     Min       1Q   Median       3Q      Max \n-1762.08  -446.98    32.59   462.31  1636.86 \n\nCoefficients:\n               Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)     362.307    283.345   1.279    0.202    \nbill_length_mm   87.415      6.402  13.654   &lt;2e-16 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 645.4 on 340 degrees of freedom\n  (2 observations deleted due to missingness)\nMultiple R-squared:  0.3542,    Adjusted R-squared:  0.3523 \nF-statistic: 186.4 on 1 and 340 DF,  p-value: &lt; 2.2e-16\n\n\npredict()関数\n\n\nコードを表示\nggplot(penguins, aes(bill_length_mm, body_mass_g)) +\n  geom_point() +\n  geom_smooth(method = \"lm\", se = FALSE)\n\n\n`geom_smooth()` using formula = 'y ~ x'\n\n\nWarning: Removed 2 rows containing non-finite values (`stat_smooth()`).\n\n\nWarning: Removed 2 rows containing missing values (`geom_point()`).\n\n\n\n\n\n\n\n\n\n点の配置にもっともよくあてはまる回帰直線は、最小二乗法の原理で求めることができる\nデータ点に対して、最も適合する直線を引く\n二つのパラメータ、切片 \\(a\\) と傾き \\(b\\)を決定する\n残差 符号の影響を除くために二乗、さらに和をとって残差平方和\n\n\n6.1.2 決定係数\nモデルにおける予測値と実測値との相関係数を2乗した値。\n観測値の分散のうち予測によって説明される部分の割合を示す\n単純な線形回帰でどのくらい説明できるかを表す値\n\n\n6.1.3 95%信頼区間",
+    "crumbs": [
+      "発展",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>回帰問題に挑戦</span>"
+    ]
+  },
+  {
+    "objectID": "regression.html#回帰と相関",
+    "href": "regression.html#回帰と相関",
+    "title": "6  回帰問題に挑戦",
+    "section": "6.2 回帰と相関",
+    "text": "6.2 回帰と相関",
+    "crumbs": [
+      "発展",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>回帰問題に挑戦</span>"
+    ]
+  },
+  {
+    "objectID": "regression.html#まとめと課題",
+    "href": "regression.html#まとめと課題",
+    "title": "6  回帰問題に挑戦",
+    "section": "6.3 まとめと課題",
+    "text": "6.3 まとめと課題",
+    "crumbs": [
+      "発展",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>回帰問題に挑戦</span>"
+    ]
+  },
+  {
+    "objectID": "classification.html",
+    "href": "classification.html",
+    "title": "7  分類問題に挑戦",
+    "section": "",
+    "text": "7.1 ロジスティック回帰",
+    "crumbs": [
+      "発展",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>分類問題に挑戦</span>"
+    ]
+  },
+  {
+    "objectID": "classification.html#主成分分析",
+    "href": "classification.html#主成分分析",
+    "title": "7  分類問題に挑戦",
+    "section": "7.2 主成分分析",
+    "text": "7.2 主成分分析\n\n\nコードを表示\nsubset(df_zoo, select = c(body_length_cm, weight_kg)) |&gt; \n  dplyr::filter(!is.na(body_length_cm)) |&gt; \n  prcomp(scale. = TRUE)\n\n\nStandard deviations (1, .., p=2):\n[1] 1.3577273 0.3956975\n\nRotation (n x k) = (2 x 2):\n                     PC1        PC2\nbody_length_cm 0.7071068 -0.7071068\nweight_kg      0.7071068  0.7071068",
+    "crumbs": [
+      "発展",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>分類問題に挑戦</span>"
+    ]
+  },
+  {
+    "objectID": "classification.html#クラスタリング",
+    "href": "classification.html#クラスタリング",
+    "title": "7  分類問題に挑戦",
+    "section": "7.3 クラスタリング",
+    "text": "7.3 クラスタリング",
+    "crumbs": [
+      "発展",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>分類問題に挑戦</span>"
+    ]
+  },
+  {
     "objectID": "exercise.html",
     "href": "exercise.html",
     "title": "付録 A — 練習問題の答えと解説",

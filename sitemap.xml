@@ -2,34 +2,42 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://iwasatoquokka.github.io/r_learn_binder/index.html</loc>
-    <lastmod>2024-02-27T09:20:12.032Z</lastmod>
+    <lastmod>2024-02-27T09:32:55.507Z</lastmod>
   </url>
   <url>
     <loc>https://iwasatoquokka.github.io/r_learn_binder/intro.html</loc>
-    <lastmod>2024-02-27T09:20:12.032Z</lastmod>
+    <lastmod>2024-02-27T09:32:55.507Z</lastmod>
   </url>
   <url>
     <loc>https://iwasatoquokka.github.io/r_learn_binder/data.html</loc>
-    <lastmod>2024-02-27T09:20:12.004Z</lastmod>
+    <lastmod>2024-02-27T09:32:55.479Z</lastmod>
   </url>
   <url>
     <loc>https://iwasatoquokka.github.io/r_learn_binder/summary_statistics.html</loc>
-    <lastmod>2024-02-27T09:20:12.036Z</lastmod>
+    <lastmod>2024-02-27T09:32:55.511Z</lastmod>
   </url>
   <url>
     <loc>https://iwasatoquokka.github.io/r_learn_binder/correlation.html</loc>
-    <lastmod>2024-02-27T09:20:12.004Z</lastmod>
+    <lastmod>2024-02-27T09:32:55.475Z</lastmod>
   </url>
   <url>
     <loc>https://iwasatoquokka.github.io/r_learn_binder/visualization.html</loc>
-    <lastmod>2024-02-27T09:20:12.036Z</lastmod>
+    <lastmod>2024-02-27T09:32:55.511Z</lastmod>
+  </url>
+  <url>
+    <loc>https://iwasatoquokka.github.io/r_learn_binder/regression.html</loc>
+    <lastmod>2024-02-27T09:32:55.507Z</lastmod>
+  </url>
+  <url>
+    <loc>https://iwasatoquokka.github.io/r_learn_binder/classification.html</loc>
+    <lastmod>2024-02-27T09:32:55.475Z</lastmod>
   </url>
   <url>
     <loc>https://iwasatoquokka.github.io/r_learn_binder/exercise.html</loc>
-    <lastmod>2024-02-27T09:20:12.004Z</lastmod>
+    <lastmod>2024-02-27T09:32:55.479Z</lastmod>
   </url>
   <url>
     <loc>https://iwasatoquokka.github.io/r_learn_binder/dataset.html</loc>
-    <lastmod>2024-02-27T09:20:12.004Z</lastmod>
+    <lastmod>2024-02-27T09:32:55.479Z</lastmod>
   </url>
 </urlset>
