@@ -1,9 +1,9 @@
 # Workflow derived from https://github.com/rstudio/r-manuals/tree/main/.github/workflows/build-website.yaml
 on:
-  push:
-    branches: main
-  pull_request:
-    branches: main
+  #push:
+  #  branches: main
+  #pull_request:
+  #  branches: main
   workflow_dispatch:
 
 name: Build Site
