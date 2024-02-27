@@ -1,0 +1,44 @@
+main strong {
+  background-image: repeating-linear-gradient(-35deg,
+    #fcf69f 0, #fcf69f 2px,
+    transparent 2px, transparent 4px
+  );
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  background-size: 100% 0.4em;
+}
+
+div.tokupon {
+  background-image: url("images/tokupon.png");
+  margin-right: 20px;
+  background-size: 80px;
+  background-repeat: no-repeat;
+  background-position: 95% 90%;
+  min-height: 140px;
+  max-width: 100%;
+}
+
+div.tokupon_none {
+  background-image: none
+}
+
+div.callout-caption-container {
+  background-repeat: no-repeat;
+  background-size: 24px;
+  background-position: 95% 0%;
+  min-height: 30px;
+}
+
+div.callout-caption-container {
+  background-image: url("images/tokupon_normal.svg");
+}
+
+div.references div strong {
+  font-weight: bold;
+  background: none;
+}
+
+span.citation strong {
+  font-weight: normal;
+  background: none;
+}

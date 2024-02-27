@@ -1,0 +1,50 @@
+project:
+  type: book
+
+lang: "ja"
+
+book:
+  title: "データ分析入門"
+  chapters:
+    - index.qmd
+    - intro.qmd
+    - part: "基礎"
+      chapters:
+        - data.qmd
+        - summary_statistics.qmd
+        - correlation.qmd
+        - visualization.qmd
+    - part: "発展"
+      chapters:
+        - regression.qmd
+        - classification.qmd
+    - summary.qmd
+    - references.qmd
+  site-url: https://iwasatoquokka.github.io/r_learn_binder/
+  repo-url: https://github.com/iwasatoquokka/r_learn_binder
+
+filters:
+  - lightbox
+
+lightbox: auto
+
+callout-appearance: default
+callout-icon: true
+
+
+knitr:
+  opts_chunk:
+    dev: "ragg_png"
+
+format:
+  html:
+    theme:
+      light: cosmo
+      dark: darkly
+    code-link: false
+    css: style.css
+    highlight-style: github
+    toc: true
+    code-fold: true
+    code-summary: "コードを表示"
+    df-print: kable
