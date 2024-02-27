@@ -1,0 +1,1337 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.550">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>データ分析入門 - 4&nbsp; 相関: 2変数の関係を調べる</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./visualization.html" rel="next">
+<link href="./summary_statistics.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "一致なし",
+    "search-matching-documents-text": "一致した文書",
+    "search-copy-link-title": "検索へのリンクをコピー",
+    "search-hide-matches-text": "追加の検索結果を非表示",
+    "search-more-match-text": "追加の検索結果",
+    "search-more-matches-text": "追加の検索結果",
+    "search-clear-button-title": "消去",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "取消",
+    "search-submit-button-title": "検索",
+    "search-label": "サーチ"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="サイドバーを切り替える" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./data.html">基礎</a></li><li class="breadcrumb-item"><a href="./correlation.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">相関: 2変数の関係を調べる</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="サイドバーを切り替える" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">データ分析入門</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/iwasatoquokka/r_learn_binder" title="ソースコード" class="quarto-navigation-tool px-1" aria-label="ソースコード"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="ダークモードの切り替え"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="サーチ"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">前書き</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">はじめに</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">基礎</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="セクションを切り替え">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">データの種類と表現方法</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./summary_statistics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">データの特徴を捉える</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./correlation.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">相関: 2変数の関係を調べる</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./visualization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">グラフの作成</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">付録</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="セクションを切り替え">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./exercise.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">練習問題の答えと解説</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dataset.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">データセット</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">目次</h2>
+   
+  <ul>
+  <li><a href="#データ分析における2つの関係" id="toc-データ分析における2つの関係" class="nav-link active" data-scroll-target="#データ分析における2つの関係"><span class="header-section-number">4.1</span> データ分析における2つの関係</a></li>
+  <li><a href="#相関-2つの変数の間の関係" id="toc-相関-2つの変数の間の関係" class="nav-link" data-scroll-target="#相関-2つの変数の間の関係"><span class="header-section-number">4.2</span> 相関: 2つの変数の間の関係</a></li>
+  <li><a href="#つの変数の関係を数値的に評価する" id="toc-つの変数の関係を数値的に評価する" class="nav-link" data-scroll-target="#つの変数の関係を数値的に評価する"><span class="header-section-number">4.3</span> 2つの変数の関係を数値的に評価する</a>
+  <ul class="collapse">
+  <li><a href="#共分散" id="toc-共分散" class="nav-link" data-scroll-target="#共分散"><span class="header-section-number">4.3.1</span> 共分散</a></li>
+  <li><a href="#相関係数" id="toc-相関係数" class="nav-link" data-scroll-target="#相関係数"><span class="header-section-number">4.3.2</span> 相関係数</a></li>
+  </ul></li>
+  <li><a href="#クロス集計表" id="toc-クロス集計表" class="nav-link" data-scroll-target="#クロス集計表"><span class="header-section-number">4.4</span> クロス集計表</a></li>
+  <li><a href="#まとめと課題" id="toc-まとめと課題" class="nav-link" data-scroll-target="#まとめと課題"><span class="header-section-number">4.5</span> まとめと課題</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./data.html">基礎</a></li><li class="breadcrumb-item"><a href="./correlation.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">相関: 2変数の関係を調べる</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">相関: 2変数の関係を調べる</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><a href="./summary_statistics.html">前章</a>では、動物の体長や体重といった1つの変数を扱う方法を紹介しました。 データ分析では1つ以上の変数を同時に扱い、それらの変数について意味や関係を明らかにすることも目指します。 この章では体長と体重、体重と分類群、つまり2変数の関係を見ていくことにします。 2つの変数の関係を表す概念として相関の導入から、関係を表す手法である相関係数や散布図、クロス集計表について紹介します。 まずは関係という言葉自体について、データ分析の視点で扱われる2つの関係を説明します。</p>
+<p>この章では次のRパッケージを利用します。 データセットとして<a href="./dataset.html#南極大陸に生育するペンギンの大きさについての観測データ"><strong>ペンギンデータ</strong></a>を引き続き利用します。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="データ分析における2つの関係" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="データ分析における2つの関係"><span class="header-section-number">4.1</span> データ分析における2つの関係</h2>
+<p><strong>データ分析における「関係」は複数の変数がともに変化する状態</strong>を指します。 関係を扱うときには次に説明する<strong>因果関係と<ruby>相関<rt>そうかん</rt></ruby>関係</strong>の2種類があり、似たものでありながら異なる状態を示すもので注意が必要です。</p>
+<p>本書の冒頭、<a href="./intro.html#データ分析って何">データ分析の目的</a>の中でみたように、 「ペンギンは翼の長い個体であれば口ばしの長くなる」はペンギンの体の部位の関係を示すものです。 こうした<strong>変数の間の関連性を相関関係</strong>といいます。 一方で、翼が長くなると口ばしが大きくなる、とするわけではありません。 逆も然りで、口ばしが大きくなれば翼が長くなるわけでもありません。 つまり、翼と口ばしの長さは、どちらかが大きくなればどちらかが大きくなることを説明するものではありません。 このような<strong>原因から結果を伴う状態を因果関係</strong>と言います。原因と結果の関係とも言えます。</p>
+<p><strong>ペンギンデータ</strong>は野外に生息するペンギン個体の観測により得られたデータです。 各個体はここで観測していない年齢や食事の内容も異なるはずです。 その場合、翼や口ばしの長さに対する影響も当然変わると考えられます。 2つの変数の関連性は明らかですが、片方の変数が原因となり、もう片方の変数の値を決めている、 因果関係があるとは言えないのです。</p>
+<p>因果関係を明らかにするのは容易ではありません。 よくある例として、因果関係がないのに、観測されない要因により因果関係があるかのように推測される2変数の関係に擬似相関があります。</p>
+<p>擬似相関の例として有名な話があります。 ある街でのアイスクリームの売り上げが最も高い時期には、熱中症の搬送者数も最も多いことが指摘されました。 この時、アイスクリームの売り上げ増が熱中症の原因（あるいは結果）であると主張されましたが、 アイスクリームの売り上げや熱中症の増加も実際には、気温の高さが原因となっています。 気温について無視し、2つの変数の関係を議論すること、特に因果関係の有無を判断することは危険です。 熱中症患者の増加を抑えるために、アイスクリームの販売を規制するなどの誤った対策が取られてしまう恐れがあります。 気温について考慮せずに分析を進めてしまうと、見せかけの因果関係を発生させてしまいます。 ここでの気温のような観測されていない変数を潜在変数といいます。</p>
+</section>
+<section id="相関-2つの変数の間の関係" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="相関-2つの変数の間の関係"><span class="header-section-number">4.2</span> 相関: 2つの変数の間の関係</h2>
+<p>2つの量的変数の関係性を明らかにするために、相関という考え方を導入します。 <strong>ペンギンデータ</strong>では翼と口ばしの長さの関係を見ました。 これらの変数のように、互いの値が増えれば片方も増えるという傾向を示す関係を正の相関関係といいます。 一方、片方の変数の値が増えたときにもう片方の値が減少する場合、負の相関関係があるといいます。 この2つの関係に加えて、相関にはもう一つの関係があります。 それは変数の間に関係が見られない状態です。このことを無相関と呼びます。</p>
+<p>変数間の相関関係はグラフ上に表現すると傾向を掴みやすくなります。 2変数のデータの関係を表現するグラフとして<strong>散布図</strong>が利用できます。 散布図は対となる量的変数について、それぞれグラフの縦軸（y軸）と横軸（x軸）からなる平面上に値を投影します。 ある変数の値が2であるとき、もう片方の変数の値が3であればグラフの座標は<span class="math inline">\((2,3)\)</span>となり、そこに点が打たれることになります。</p>
+<p><strong>ペンギンデータ</strong>の翼の長さと口ばしの長さの関係を散布図で表してみましょう(<a href="intro.html#fig-penguins" class="quarto-xref">図&nbsp;<span>1.1</span></a>) <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>。 まずはデータの一部を確認します。</p>
+<div class="cell" data-df-print="paged">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(flipper_length_mm, bill_length_mm) <span class="sc">|&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">10</span>)</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="table table-sm table-striped small">
+<caption>ペンギンデータの口ばしと翼の長さの値</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;">flipper_length_mm</th>
+<th style="text-align: right;">bill_length_mm</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">181</td>
+<td style="text-align: right;">39.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">186</td>
+<td style="text-align: right;">39.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">195</td>
+<td style="text-align: right;">40.3</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">193</td>
+<td style="text-align: right;">36.7</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">190</td>
+<td style="text-align: right;">39.3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">181</td>
+<td style="text-align: right;">38.9</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">195</td>
+<td style="text-align: right;">39.2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">193</td>
+<td style="text-align: right;">34.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">190</td>
+<td style="text-align: right;">42.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p>一見すると傾向が掴みにくい2変数の関係もグラフに表すことで関係を捉えやすくなります。 散布図で横軸に示す口ばしの長さも、縦軸に示す翼の長さもいずれも値が大きいほど、もう片方の値も大きいことがわかります。</p>
+<p>散布図を用いて相関関係を整理してみましょう。 <a href="#fig-correlation" class="quarto-xref">図&nbsp;<span>4.1</span></a> に相関関係を表わす3つの状態を示しました。 散布図の特徴として、縦軸と横軸に表示する変数を入れ替えた場合でも同様の相関関係を見ることができます。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>df_corr <span class="ot">&lt;-</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">rnorm</span>(<span class="dv">100</span>),</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="fu">rnorm</span>(<span class="dv">100</span>),</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">y_positive =</span> <span class="dv">5</span> <span class="sc">*</span> x <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="at">sd =</span> <span class="dv">3</span>),</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">y_negative =</span> <span class="sc">-</span><span class="dv">5</span> <span class="sc">*</span> x <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="at">sd =</span> <span class="dv">4</span>))</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  df_corr <span class="sc">|&gt;</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x, y_positive)) <span class="sc">+</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"y"</span>) <span class="sc">+</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"正の相関関係"</span>)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  df_corr <span class="sc">|&gt;</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"無相関"</span>)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  df_corr <span class="sc">|&gt;</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x, y_negative)) <span class="sc">+</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"y"</span>) <span class="sc">+</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"負の相関関係"</span>)</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>p1 <span class="sc">+</span> p2 <span class="sc">+</span> p3 <span class="sc">+</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_layout</span>(<span class="at">ncol =</span> <span class="dv">3</span>)</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-correlation" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-correlation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="correlation_files/figure-html/fig-correlation-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" data-glightbox="description: .lightbox-desc-1"><img src="correlation_files/figure-html/fig-correlation-1.png" class="img-fluid figure-img" width="1152"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-correlation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+図&nbsp;4.1: 相関関係を示す3つの状態
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="つの変数の関係を数値的に評価する" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="つの変数の関係を数値的に評価する"><span class="header-section-number">4.3</span> 2つの変数の関係を数値的に評価する</h2>
+<p>散布図によって、2つの変数の関係がありそうなのかなさそうなのか、おおよその傾向をつかむことができます。 しかし客観的に関係を評価するためには別の観点でデータを見る必要があります。 数値によって関係の強さを評価する方法として、共分散や相関係数があります。 これらの指標は、ある変数の値が変わったとき、もう片方の変数の値はどう変わるかを数値的に表現します。</p>
+<section id="共分散" class="level3" data-number="4.3.1">
+<h3 data-number="4.3.1" class="anchored" data-anchor-id="共分散"><span class="header-section-number">4.3.1</span> 共分散</h3>
+<p>2つの変数の関係を数値的に評価するとき、散布図に表示したように扱う変数を<span class="math inline">\(x\)</span>と<span class="math inline">\(y\)</span>の関係として見ていくことになります。 2つの変数の組を<span class="math inline">\((x_1, y_1), ... (x_n, y_n)\)</span>、これは、一つ目の<span class="math inline">\(x\)</span>変数の値、一つ目の<span class="math inline">\(y\)</span>変数の値から、データに含まれる数までの<span class="math inline">\(x\)</span>変数の値、データに含まれる数(<span class="math inline">\(n\)</span>と表します)までの<span class="math inline">\(y\)</span>変数の値を一つずつ見ることと同じ意味としたとき、共分散<span class="math inline">\(Cov_{xy}\)</span>は次のように計算できます<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>。</p>
+<p><span class="math display">\[
+Cov_{xy} = \frac{1}{n} \sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})
+\]</span></p>
+<p>難しそうな記号<span class="math inline">\(\sum\)</span>（シグマ、日本語では<ruby>総和<rt>そうわ</rt></ruby>と読みます。）が出てきましたが、一つずつ進めていきましょう。 ここで出てきた<span class="math inline">\(\bar{x},\bar{y}\)</span>は<span class="math inline">\(x,y\)</span>の平均値を表します。 <span class="math inline">\((x_i - \bar{x})\)</span>ということは、<span class="math inline">\(i\)</span>番目の<span class="math inline">\(x\)</span>変数の値と<span class="math inline">\(x\)</span>の平均値との差、すなわち偏差を求めることになります。 これは<span class="math inline">\(x\)</span>だけでなく<span class="math inline">\((y_i - \bar{y})\)</span>とあるように<span class="math inline">\(y\)</span>についても同様です。 <span class="math inline">\(x\)</span>変数と<span class="math inline">\(y\)</span>変数について偏差を求めたら、それを掛け合わせます。</p>
+<p>さて先ほど<span class="math inline">\(i\)</span>番目の値について偏差を求めると言いましたが、 これは具体的に何番目の数値を示しているのでしょうか。 数学では、<span class="math inline">\(x\)</span>についてのすべての値を足すときに<span class="math inline">\(x_1 + x_2 + ... + x_n\)</span>と書けますが、これを簡略化したものとして <span class="math inline">\(\sum\)</span>を用います。 <span class="math inline">\(\sum\)</span>には上下に添字がつくことがあり、下の部分はどこから始めてということを意味する記号、上の部分にはどこまでかを示す記号を付け加えます。 そして<span class="math inline">\(\sum\)</span>の右側には足し合わされる内容を記述します。 このことを理解して先ほどの共分散の計算式に戻ります。</p>
+<p>共分散の式では、偏差の計算を行う際に<span class="math inline">\(i\)</span>が使われています。 また<span class="math inline">\(\sum_{i=1}^{n}\)</span>を言語化すると「1から始めて<span class="math inline">\(n\)</span>まで足す」となります。 つまり偏差を変数<span class="math inline">\(x\)</span>、<span class="math inline">\(y\)</span>のすべてのデータに対して求めて掛け合わせた値を足すことになります。 最後にデータの数<span class="math inline">\(n\)</span>で割ることで共分散が計算されます。</p>
+<p>実際に値を見ながら計算を行いましょう。 ここでは単純にデータのすべてではなく2つのデータまでで共分散を求める、ということをやってみます。</p>
+<div class="cell" data-df-print="tibble">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ペンギンデータから2件分を取り出して共分散を求めます</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  penguins <span class="sc">|&gt;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">2</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(flipper_length_mm, bill_length_mm)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: right;">flipper_length_mm</th>
+<th style="text-align: right;">bill_length_mm</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">181</td>
+<td style="text-align: right;">39.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">186</td>
+<td style="text-align: right;">39.5</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 平均、偏差を求めます</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  df <span class="sc">|&gt;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">everything</span>(),<span class="at">.fns =</span> mean, <span class="at">.names =</span> <span class="st">"{.col}_mean"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">|&gt;</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">flipper_length_deviation =</span> flipper_length_mm <span class="sc">-</span> flipper_length_mm_mean,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">bill_length_deviation =</span> bill_length_mm <span class="sc">-</span> bill_length_mm_mean)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 12%">
+<col style="width: 18%">
+<col style="width: 16%">
+<col style="width: 20%">
+<col style="width: 17%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">flipper_length_mm</th>
+<th style="text-align: right;">bill_length_mm</th>
+<th style="text-align: right;">flipper_length_mm_mean</th>
+<th style="text-align: right;">bill_length_mm_mean</th>
+<th style="text-align: right;">flipper_length_deviation</th>
+<th style="text-align: right;">bill_length_deviation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">181</td>
+<td style="text-align: right;">39.1</td>
+<td style="text-align: right;">183.5</td>
+<td style="text-align: right;">39.3</td>
+<td style="text-align: right;">-2.5</td>
+<td style="text-align: right;">-0.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">186</td>
+<td style="text-align: right;">39.5</td>
+<td style="text-align: right;">183.5</td>
+<td style="text-align: right;">39.3</td>
+<td style="text-align: right;">2.5</td>
+<td style="text-align: right;">0.2</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p>この値を式に当てはめます。<span class="math inline">\(n\)</span>を2として置き換えます。</p>
+<p><span class="math display">\[
+Cov_{xy} = \frac{1}{2} \sum_{i=1}^{2}(x_i - \bar{x})(y_i - \bar{y}) \\
+=\frac{1}{2} ( (181-183.5)(39.1-39.3)+(186-183.5)(39.5-39.3))　\\
+=0.5
+\]</span></p>
+<!-- ( (181-183.5)*(39.1-39.3)+(186-183.5)*(39.5-39.3) ) -->
+<p>となります。Rでも同じ計算を実行します。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(<span class="at">deviation_cross =</span> flipper_length_deviation <span class="sc">*</span> bill_length_deviation) <span class="sc">|&gt;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(deviation_cross) <span class="sc">|&gt;</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>() <span class="sc">/</span> <span class="fu">nrow</span>(df)</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.5</code></pre>
+</div>
+</div>
+<p>先ほどの共分散の算出では、最終的にデータの件数<span class="math inline">\(n\)</span>によって割りました。 しかしRの標準的な偏差を求める関数<code>cov()</code>は<span class="math inline">\(n-1\)</span>で割る処理を行います。 この方法で求めれらる共分散は不偏共分散と呼ばれるものです。 得られたデータには偏りがあることを想定し、その偏りを除外する目的で1が引かれます。 話が難しくなりますので、これ以上の説明は参考文献に譲ります。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Rでは n -1 で割る不偏共分散が計算される</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cov</span>(df<span class="sc">$</span>flipper_length_mm, df<span class="sc">$</span>bill_length_mm)</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># nで割る共分散を知りたい場合</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cov</span>(df<span class="sc">$</span>flipper_length_mm, df<span class="sc">$</span>bill_length_mm) <span class="sc">*</span> (<span class="fu">nrow</span>(df)<span class="sc">-</span><span class="dv">1</span>) <span class="sc">/</span> <span class="fu">nrow</span>(df)</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.5</code></pre>
+</div>
+</div>
+<p>共分散と散布図の関係は、共分散の値が正のときには右上がりの散布図、共分散が負の値であれば散布図は右下がりとなります。 また散布図の中でデータがまんべんなく散らばっている場合、共分散は0に近い値となります。</p>
+<p><strong>共分散は値が大きいほど2変数の関係が強いことを示します。しかし共分散の短所は変数の単位に依存して値が変わる</strong>ことです。</p>
+<p>単位の影響の例として、ミリメートル(mm)で記録される<strong>ペンギンデータ</strong>の翼とくちばしの長さについて、 センチメートル(cm)に単位を変換した場合に共分散がどのように変化するのかを示します。 はじめに元のミリメートルでの共分散の値は次のようになります。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>df_mm <span class="ot">&lt;-</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  penguins <span class="sc">|&gt;</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(flipper_length_mm, bill_length_mm) <span class="sc">|&gt;</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  purrr<span class="sc">::</span><span class="fu">set_names</span>(<span class="fu">c</span>(<span class="st">"flipper_length"</span>, <span class="st">"bill_length"</span>))</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="fu">cov</span>(df_mm<span class="sc">$</span>flipper_length, df_mm<span class="sc">$</span>bill_length, <span class="at">use =</span> <span class="st">"complete.obs"</span>)</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 50.37577</code></pre>
+</div>
+</div>
+<p>続いて測定単位をセンチメートルに変換した変数で共分散を求めてみます。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>df_cm <span class="ot">&lt;-</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  df_mm <span class="sc">|&gt;</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(<span class="fu">across</span>(<span class="fu">everything</span>(), <span class="at">.fns =</span> <span class="sc">~</span> .x <span class="sc">/</span> <span class="dv">10</span>))</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cov</span>(df_cm<span class="sc">$</span>flipper_length, df_cm<span class="sc">$</span>bill_length,  <span class="at">use =</span> <span class="st">"complete.obs"</span>)</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.5037577</code></pre>
+</div>
+</div>
+<p>2つの変数の値の関係が変わった訳ではないのに、ミリメートルのときの共分散よりも小さな値になってしまいました。 これでは変数の関係を正しく評価できません。 そこでこの単位依存の問題を修正した尺度として相関係数が登場します。</p>
+</section>
+<section id="相関係数" class="level3" data-number="4.3.2">
+<h3 data-number="4.3.2" class="anchored" data-anchor-id="相関係数"><span class="header-section-number">4.3.2</span> 相関係数</h3>
+<p>共分散の単位依存の性質は、共分散を各変数の<a href="./summary_statistics.html#分散と標準偏差">標準偏差</a>の積で割ることで解消できます。 これを相関係数と呼びます。 相関係数(<span class="math inline">\(r\)</span>)は次の式で定義されます。</p>
+<p><span class="math display">\[
+r = \frac{Cov_{xy}}{\sqrt{\frac{1}{n}\sum_{i=i}^{n}{(x_i - \bar{x})^2}} \sqrt{\frac{1}{n}\sum_{i=i}^{n}{(y_i - \bar{y})^2}}}
+\]</span></p>
+<!-- 標準化 -->
+<p><strong>相関係数は2つの変数の間の直線的な関係の強さを評価する指標</strong>です。 -1以上から1以下の値をとり、変数の関係が強いほど、散布図にしたときに直線関係に近いものほど、絶対値が1に近づきます。</p>
+<p>相関係数にはいくつかの種類があり、中でもピアソンの積率相関係数が最も頻繁に利用されます<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>。 本書でも、相関係数といった時にはピアソンの積率相関係数を指して使います。</p>
+<div class="tokupon_none callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+相関係数の注意点
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>相関係数はあくまでも変数の関係が直線関係にあることを仮定しているよ。 だから2変数間の関係が<strong>直線的でないときは適切な計算が行えない</strong>んだ。</p>
+<p>また、相関係数は外れ値の影響を受けやすいよ。 外れ値とはデータに含まれる極端に小さい・大きい値のことだよ。 平均値が外れ値の影響を受けやすいということや、箱ヒゲ図を描画した際にも外れ値は他のデータと区別して表現していたことを思い出してね。 外れ値はデータ全体の傾向を大きく左右する影響があるから注意が必要なんだ。</p>
+</div>
+</div>
+<p>Rでは相関係数の算出を<code>cor()</code>関数によって行います。 共分散の値を求めたとき同様、<strong>ペンギンデータ</strong>の翼の長さとくちばしの長さについて相関係数を調べることにします。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(df_mm<span class="sc">$</span>flipper_length, df_mm<span class="sc">$</span>bill_length, <span class="at">use =</span> <span class="st">"complete.obs"</span>)</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.6561813</code></pre>
+</div>
+</div>
+<p>この値は正の値であるので、正の相関であることがわかります。 一方で変数の関係の強さとしてはどの程度でしょうか。 相関係数の判断基準として <a href="#tbl-correlation" class="quarto-xref">表&nbsp;<span>4.1</span></a> が一般的に使われています。 0.6561813は「やや強い相関がある」と言えることがわかりました。</p>
+<div class="cell">
+<details class="code-fold">
+<summary>コードを表示</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>相関係数, <span class="sc">~</span>相関の強さ,</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"\u00b10.7以上"</span>, <span class="st">"とても強い"</span>,</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"\u00b10.4~0.7"</span>, <span class="st">"やや強い"</span>,</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"\u00b10.2~0.4"</span>, <span class="st">"弱い"</span>,</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"\u00b10.2以下"</span>, <span class="st">"ほとんどなし"</span>)</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="tbl-correlation" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-correlation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+表&nbsp;4.1: 相関係数の目安
+</figcaption>
+<div aria-describedby="tbl-correlation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="do-not-create-environment cell table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">相関係数</th>
+<th style="text-align: left;">相関の強さ</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">±0.7以上</td>
+<td style="text-align: left;">とても強い</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">±0.4~0.7</td>
+<td style="text-align: left;">やや強い</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">±0.2~0.4</td>
+<td style="text-align: left;">弱い</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">±0.2以下</td>
+<td style="text-align: left;">ほとんどなし</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>続いて、相関係数が共分散の欠点を改善した点を確認しましょう。 共分散で求めたとき同様に<strong>ペンギンデータ</strong>の測定単位をセンチメートルに変換した2つのデータを用いて、測定単位の違いが相関係数に与える影響を調べてみます。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(df_cm<span class="sc">$</span>flipper_length, df_cm<span class="sc">$</span>bill_length, <span class="at">use =</span> <span class="st">"complete.obs"</span>)</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.6561813</code></pre>
+</div>
+</div>
+<p>相関係数では共分散とは異なり、測定単位の影響を受けない点が確認できました。 また、相関係数は標準化と呼ばれる処理を行った場合でもその影響を受けません。 このことから相関係数は標準化された値どうしの共分散とも考えられます。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 相関係数はデータの測定単位や標準化の有無に依存しない</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(<span class="fu">scale</span>(df_mm<span class="sc">$</span>flipper_length), <span class="fu">scale</span>(df_mm<span class="sc">$</span>bill_length), <span class="at">use =</span> <span class="st">"complete.obs"</span>)</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          [,1]
+[1,] 0.6561813</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(<span class="fu">scale</span>(df_cm<span class="sc">$</span>flipper_length), <span class="fu">scale</span>(df_cm<span class="sc">$</span>bill_length), <span class="at">use =</span> <span class="st">"complete.obs"</span>)</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          [,1]
+[1,] 0.6561813</code></pre>
+</div>
+</div>
+<p>最後に繰り返しになりますが、相関係数は関係の強さを示す指標であって変数間の因果関係を示すものではありません。 どんな変数間であろうと相関係数は必ず出る点も気にしておきましょう。 2つの変数に対する関係として、片方の変数からもう片方の変数を説明することには回帰分析を実行する必要があります。</p>
+</section>
+</section>
+<section id="クロス集計表" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="クロス集計表"><span class="header-section-number">4.4</span> クロス集計表</h2>
+<p>質的変数の変数間の関係を調べる方法を紹介します。 <strong>ペンギンデータ</strong>には、種の名前 species、生育する島の名前 island、性別 sex の3つの質的変数があります。 これらの質的変数間の関係を調べるためにクロス集計表を用います。</p>
+<p>クロス集計表では、対象の質的変数に含まれる件数をカウントし、表にまとめます。 表の行・列には変数の項目が並びます。 <a href="#tbl-penguins_sp_islands" class="quarto-xref">表&nbsp;<span>4.2</span></a> に<strong>ペンギンデータ</strong>における島ごとの種数を整理しました。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(species, island) <span class="sc">|&gt;</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(<span class="at">names_from =</span> island, <span class="at">values_from =</span> n, <span class="at">values_fill =</span> <span class="dv">0</span>)</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="tbl-penguins_sp_islands" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-penguins_sp_islands-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+表&nbsp;4.2: ペンギンデータにおける島ごとの種数
+</figcaption>
+<div aria-describedby="tbl-penguins_sp_islands-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="do-not-create-environment cell table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">species</th>
+<th style="text-align: right;">Biscoe</th>
+<th style="text-align: right;">Dream</th>
+<th style="text-align: right;">Torgersen</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Adelie</td>
+<td style="text-align: right;">44</td>
+<td style="text-align: right;">56</td>
+<td style="text-align: right;">52</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Chinstrap</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">68</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gentoo</td>
+<td style="text-align: right;">124</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>この表を見るだけで次の事柄がわかります。</p>
+<ul>
+<li>アデリーペンギン Adelie は調査地のどの島にも生育する</li>
+<li>ヒゲペンギン Chinstrap はDream島にだけ生育する</li>
+<li>ジェンツーペンギン Gentoo はBiscoe島に多いがDreamやTorgersenには生育しない</li>
+</ul>
+<p>クロス集計表の利用によって1変数を調べただけではわからなかった質的変数の特徴を知ることができました。</p>
+<p>クロス集計表によって、データの比較が行いやすくなりましたが、 その差は本当にデータの性質を反映しているのでしょうか。 統計的な手法を用いることで、このような差の有無を判断できるようになります。 「なんとなく差がある」結果を<strong>統計的仮説検定</strong>を行うことで客観的に評価できるようになります。</p>
+</section>
+<section id="まとめと課題" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="まとめと課題"><span class="header-section-number">4.5</span> まとめと課題</h2>
+<ul>
+<li>相関の例を探してみよう。擬似相関や因果関係とは違うか考えてみよう。</li>
+</ul>
+
+
+<div class="hidden" aria-hidden="true">
+<span class="glightbox-desc lightbox-desc-1">図&nbsp;4.1: 相関関係を示す3つの状態</span>
+</div>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>この図は<a href="./intro.html#データ分析って何">はじめに</a>の中でペンギンデータの体の部位の関係を見たときに使われていた（<a href="intro.html#fig-penguins" class="quarto-xref">図&nbsp;<span>1.1</span></a>）で示した散布図と同じです。<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>共分散は英語でcovarianceです。<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>スピアマンの順位相関係数、ケンドールの順位相関係数などがあります。<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "コピーしました");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "コピーしました");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./summary_statistics.html" class="pagination-link" aria-label="データの特徴を捉える">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">データの特徴を捉える</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./visualization.html" class="pagination-link" aria-label="グラフの作成">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">グラフの作成</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","closeEffect":"zoom","openEffect":"zoom","selector":".lightbox","loop":false});
+window.onload = () => {
+  lightboxQuarto.on('slide_before_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    const href = trigger.getAttribute('href');
+    if (href !== null) {
+      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+      if (imgEl !== null) {
+        const srcAttr = imgEl.getAttribute("src");
+        if (srcAttr && srcAttr.startsWith("data:")) {
+          slideConfig.href = srcAttr;
+        }
+      }
+    } 
+  });
+
+  lightboxQuarto.on('slide_after_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    if (window.Quarto?.typesetMath) {
+      window.Quarto.typesetMath(slideNode);
+    }
+  });
+
+};
+          </script>
+
+
+
+
+</body></html>

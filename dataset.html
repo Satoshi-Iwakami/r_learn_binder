@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.550">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>データ分析入門 - 付録 B — データセット</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./exercise.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "一致なし",
+    "search-matching-documents-text": "一致した文書",
+    "search-copy-link-title": "検索へのリンクをコピー",
+    "search-hide-matches-text": "追加の検索結果を非表示",
+    "search-more-match-text": "追加の検索結果",
+    "search-more-matches-text": "追加の検索結果",
+    "search-clear-button-title": "消去",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "取消",
+    "search-submit-button-title": "検索",
+    "search-label": "サーチ"
+  }
+}</script>
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="サイドバーを切り替える" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./exercise.html">付録</a></li><li class="breadcrumb-item"><a href="./dataset.html"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">データセット</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="サイドバーを切り替える" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">データ分析入門</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/iwasatoquokka/r_learn_binder" title="ソースコード" class="quarto-navigation-tool px-1" aria-label="ソースコード"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="ダークモードの切り替え"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="サーチ"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">前書き</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">はじめに</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">基礎</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="セクションを切り替え">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">データの種類と表現方法</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./summary_statistics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">データの特徴を捉える</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./correlation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">相関: 2変数の関係を調べる</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./visualization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">グラフの作成</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">付録</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="セクションを切り替え">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./exercise.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">練習問題の答えと解説</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dataset.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">データセット</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">目次</h2>
+   
+  <ul>
+  <li><a href="#南極大陸に生育するペンギンの大きさについての観測データ" id="toc-南極大陸に生育するペンギンの大きさについての観測データ" class="nav-link active" data-scroll-target="#南極大陸に生育するペンギンの大きさについての観測データ"><span class="header-section-number">B.1</span> 南極大陸に生育するペンギンの大きさについての観測データ</a></li>
+  <li><a href="#令和2年度-学校保健統計調査-都道府県別の身長体重の平均値及び標準偏差" id="toc-令和2年度-学校保健統計調査-都道府県別の身長体重の平均値及び標準偏差" class="nav-link" data-scroll-target="#令和2年度-学校保健統計調査-都道府県別の身長体重の平均値及び標準偏差"><span class="header-section-number">B.2</span> 令和2年度 学校保健統計調査 都道府県別の身長・体重の平均値及び標準偏差</a></li>
+  <li><a href="#とくしま動物園で飼育される動物の体の大きさと体重" id="toc-とくしま動物園で飼育される動物の体の大きさと体重" class="nav-link" data-scroll-target="#とくしま動物園で飼育される動物の体の大きさと体重"><span class="header-section-number">B.3</span> とくしま動物園で飼育される動物の体の大きさと体重</a></li>
+  <li><a href="#とくしま動物園で飼育される動物の保全状況と生息地" id="toc-とくしま動物園で飼育される動物の保全状況と生息地" class="nav-link" data-scroll-target="#とくしま動物園で飼育される動物の保全状況と生息地"><span class="header-section-number">B.4</span> とくしま動物園で飼育される動物の保全状況と生息地</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./exercise.html">付録</a></li><li class="breadcrumb-item"><a href="./dataset.html"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">データセット</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">付録 B — データセット</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="南極大陸に生育するペンギンの大きさについての観測データ" class="level2" data-number="B.1">
+<h2 data-number="B.1" class="anchored" data-anchor-id="南極大陸に生育するペンギンの大きさについての観測データ"><span class="header-section-number">B.1</span> 南極大陸に生育するペンギンの大きさについての観測データ</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>コードを表示</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>penguins</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["species"],"name":[1],"type":["fct"],"align":["left"]},{"label":["island"],"name":[2],"type":["fct"],"align":["left"]},{"label":["bill_length_mm"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["bill_depth_mm"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["flipper_length_mm"],"name":[5],"type":["int"],"align":["right"]},{"label":["body_mass_g"],"name":[6],"type":["int"],"align":["right"]},{"label":["sex"],"name":[7],"type":["fct"],"align":["left"]},{"label":["year"],"name":[8],"type":["int"],"align":["right"]}],"data":[{"1":"Adelie","2":"Torgersen","3":"39.1","4":"18.7","5":"181","6":"3750","7":"male","8":"2007"},{"1":"Adelie","2":"Torgersen","3":"39.5","4":"17.4","5":"186","6":"3800","7":"female","8":"2007"},{"1":"Adelie","2":"Torgersen","3":"40.3","4":"18.0","5":"195","6":"3250","7":"female","8":"2007"},{"1":"Adelie","2":"Torgersen","3":"NA","4":"NA","5":"NA","6":"NA","7":"NA","8":"2007"},{"1":"Adelie","2":"Torgersen","3":"36.7","4":"19.3","5":"193","6":"3450","7":"female","8":"2007"},{"1":"Adelie","2":"Torgersen","3":"39.3","4":"20.6","5":"190","6":"3650","7":"male","8":"2007"},{"1":"Adelie","2":"Torgersen","3":"38.9","4":"17.8","5":"181","6":"3625","7":"female","8":"2007"},{"1":"Adelie","2":"Torgersen","3":"39.2","4":"19.6","5":"195","6":"4675","7":"male","8":"2007"},{"1":"Adelie","2":"Torgersen","3":"34.1","4":"18.1","5":"193","6":"3475","7":"NA","8":"2007"},{"1":"Adelie","2":"Torgersen","3":"42.0","4":"20.2","5":"190","6":"4250","7":"NA","8":"2007"},{"1":"Adelie","2":"Torgersen","3":"37.8","4":"17.1","5":"186","6":"3300","7":"NA","8":"2007"},{"1":"Adelie","2":"Torgersen","3":"37.8","4":"17.3","5":"180","6":"3700","7":"NA","8":"2007"},{"1":"Adelie","2":"Torgersen","3":"41.1","4":"17.6","5":"182","6":"3200","7":"female","8":"2007"},{"1":"Adelie","2":"Torgersen","3":"38.6","4":"21.2","5":"191","6":"3800","7":"male","8":"2007"},{"1":"Adelie","2":"Torgersen","3":"34.6","4":"21.1","5":"198","6":"4400","7":"male","8":"2007"},{"1":"Adelie","2":"Torgersen","3":"36.6","4":"17.8","5":"185","6":"3700","7":"female","8":"2007"},{"1":"Adelie","2":"Torgersen","3":"38.7","4":"19.0","5":"195","6":"3450","7":"female","8":"2007"},{"1":"Adelie","2":"Torgersen","3":"42.5","4":"20.7","5":"197","6":"4500","7":"male","8":"2007"},{"1":"Adelie","2":"Torgersen","3":"34.4","4":"18.4","5":"184","6":"3325","7":"female","8":"2007"},{"1":"Adelie","2":"Torgersen","3":"46.0","4":"21.5","5":"194","6":"4200","7":"male","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"37.8","4":"18.3","5":"174","6":"3400","7":"female","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"37.7","4":"18.7","5":"180","6":"3600","7":"male","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"35.9","4":"19.2","5":"189","6":"3800","7":"female","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"38.2","4":"18.1","5":"185","6":"3950","7":"male","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"38.8","4":"17.2","5":"180","6":"3800","7":"male","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"35.3","4":"18.9","5":"187","6":"3800","7":"female","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"40.6","4":"18.6","5":"183","6":"3550","7":"male","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"40.5","4":"17.9","5":"187","6":"3200","7":"female","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"37.9","4":"18.6","5":"172","6":"3150","7":"female","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"40.5","4":"18.9","5":"180","6":"3950","7":"male","8":"2007"},{"1":"Adelie","2":"Dream","3":"39.5","4":"16.7","5":"178","6":"3250","7":"female","8":"2007"},{"1":"Adelie","2":"Dream","3":"37.2","4":"18.1","5":"178","6":"3900","7":"male","8":"2007"},{"1":"Adelie","2":"Dream","3":"39.5","4":"17.8","5":"188","6":"3300","7":"female","8":"2007"},{"1":"Adelie","2":"Dream","3":"40.9","4":"18.9","5":"184","6":"3900","7":"male","8":"2007"},{"1":"Adelie","2":"Dream","3":"36.4","4":"17.0","5":"195","6":"3325","7":"female","8":"2007"},{"1":"Adelie","2":"Dream","3":"39.2","4":"21.1","5":"196","6":"4150","7":"male","8":"2007"},{"1":"Adelie","2":"Dream","3":"38.8","4":"20.0","5":"190","6":"3950","7":"male","8":"2007"},{"1":"Adelie","2":"Dream","3":"42.2","4":"18.5","5":"180","6":"3550","7":"female","8":"2007"},{"1":"Adelie","2":"Dream","3":"37.6","4":"19.3","5":"181","6":"3300","7":"female","8":"2007"},{"1":"Adelie","2":"Dream","3":"39.8","4":"19.1","5":"184","6":"4650","7":"male","8":"2007"},{"1":"Adelie","2":"Dream","3":"36.5","4":"18.0","5":"182","6":"3150","7":"female","8":"2007"},{"1":"Adelie","2":"Dream","3":"40.8","4":"18.4","5":"195","6":"3900","7":"male","8":"2007"},{"1":"Adelie","2":"Dream","3":"36.0","4":"18.5","5":"186","6":"3100","7":"female","8":"2007"},{"1":"Adelie","2":"Dream","3":"44.1","4":"19.7","5":"196","6":"4400","7":"male","8":"2007"},{"1":"Adelie","2":"Dream","3":"37.0","4":"16.9","5":"185","6":"3000","7":"female","8":"2007"},{"1":"Adelie","2":"Dream","3":"39.6","4":"18.8","5":"190","6":"4600","7":"male","8":"2007"},{"1":"Adelie","2":"Dream","3":"41.1","4":"19.0","5":"182","6":"3425","7":"male","8":"2007"},{"1":"Adelie","2":"Dream","3":"37.5","4":"18.9","5":"179","6":"2975","7":"NA","8":"2007"},{"1":"Adelie","2":"Dream","3":"36.0","4":"17.9","5":"190","6":"3450","7":"female","8":"2007"},{"1":"Adelie","2":"Dream","3":"42.3","4":"21.2","5":"191","6":"4150","7":"male","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"39.6","4":"17.7","5":"186","6":"3500","7":"female","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"40.1","4":"18.9","5":"188","6":"4300","7":"male","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"35.0","4":"17.9","5":"190","6":"3450","7":"female","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"42.0","4":"19.5","5":"200","6":"4050","7":"male","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"34.5","4":"18.1","5":"187","6":"2900","7":"female","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"41.4","4":"18.6","5":"191","6":"3700","7":"male","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"39.0","4":"17.5","5":"186","6":"3550","7":"female","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"40.6","4":"18.8","5":"193","6":"3800","7":"male","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"36.5","4":"16.6","5":"181","6":"2850","7":"female","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"37.6","4":"19.1","5":"194","6":"3750","7":"male","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"35.7","4":"16.9","5":"185","6":"3150","7":"female","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"41.3","4":"21.1","5":"195","6":"4400","7":"male","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"37.6","4":"17.0","5":"185","6":"3600","7":"female","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"41.1","4":"18.2","5":"192","6":"4050","7":"male","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"36.4","4":"17.1","5":"184","6":"2850","7":"female","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"41.6","4":"18.0","5":"192","6":"3950","7":"male","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"35.5","4":"16.2","5":"195","6":"3350","7":"female","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"41.1","4":"19.1","5":"188","6":"4100","7":"male","8":"2008"},{"1":"Adelie","2":"Torgersen","3":"35.9","4":"16.6","5":"190","6":"3050","7":"female","8":"2008"},{"1":"Adelie","2":"Torgersen","3":"41.8","4":"19.4","5":"198","6":"4450","7":"male","8":"2008"},{"1":"Adelie","2":"Torgersen","3":"33.5","4":"19.0","5":"190","6":"3600","7":"female","8":"2008"},{"1":"Adelie","2":"Torgersen","3":"39.7","4":"18.4","5":"190","6":"3900","7":"male","8":"2008"},{"1":"Adelie","2":"Torgersen","3":"39.6","4":"17.2","5":"196","6":"3550","7":"female","8":"2008"},{"1":"Adelie","2":"Torgersen","3":"45.8","4":"18.9","5":"197","6":"4150","7":"male","8":"2008"},{"1":"Adelie","2":"Torgersen","3":"35.5","4":"17.5","5":"190","6":"3700","7":"female","8":"2008"},{"1":"Adelie","2":"Torgersen","3":"42.8","4":"18.5","5":"195","6":"4250","7":"male","8":"2008"},{"1":"Adelie","2":"Torgersen","3":"40.9","4":"16.8","5":"191","6":"3700","7":"female","8":"2008"},{"1":"Adelie","2":"Torgersen","3":"37.2","4":"19.4","5":"184","6":"3900","7":"male","8":"2008"},{"1":"Adelie","2":"Torgersen","3":"36.2","4":"16.1","5":"187","6":"3550","7":"female","8":"2008"},{"1":"Adelie","2":"Torgersen","3":"42.1","4":"19.1","5":"195","6":"4000","7":"male","8":"2008"},{"1":"Adelie","2":"Torgersen","3":"34.6","4":"17.2","5":"189","6":"3200","7":"female","8":"2008"},{"1":"Adelie","2":"Torgersen","3":"42.9","4":"17.6","5":"196","6":"4700","7":"male","8":"2008"},{"1":"Adelie","2":"Torgersen","3":"36.7","4":"18.8","5":"187","6":"3800","7":"female","8":"2008"},{"1":"Adelie","2":"Torgersen","3":"35.1","4":"19.4","5":"193","6":"4200","7":"male","8":"2008"},{"1":"Adelie","2":"Dream","3":"37.3","4":"17.8","5":"191","6":"3350","7":"female","8":"2008"},{"1":"Adelie","2":"Dream","3":"41.3","4":"20.3","5":"194","6":"3550","7":"male","8":"2008"},{"1":"Adelie","2":"Dream","3":"36.3","4":"19.5","5":"190","6":"3800","7":"male","8":"2008"},{"1":"Adelie","2":"Dream","3":"36.9","4":"18.6","5":"189","6":"3500","7":"female","8":"2008"},{"1":"Adelie","2":"Dream","3":"38.3","4":"19.2","5":"189","6":"3950","7":"male","8":"2008"},{"1":"Adelie","2":"Dream","3":"38.9","4":"18.8","5":"190","6":"3600","7":"female","8":"2008"},{"1":"Adelie","2":"Dream","3":"35.7","4":"18.0","5":"202","6":"3550","7":"female","8":"2008"},{"1":"Adelie","2":"Dream","3":"41.1","4":"18.1","5":"205","6":"4300","7":"male","8":"2008"},{"1":"Adelie","2":"Dream","3":"34.0","4":"17.1","5":"185","6":"3400","7":"female","8":"2008"},{"1":"Adelie","2":"Dream","3":"39.6","4":"18.1","5":"186","6":"4450","7":"male","8":"2008"},{"1":"Adelie","2":"Dream","3":"36.2","4":"17.3","5":"187","6":"3300","7":"female","8":"2008"},{"1":"Adelie","2":"Dream","3":"40.8","4":"18.9","5":"208","6":"4300","7":"male","8":"2008"},{"1":"Adelie","2":"Dream","3":"38.1","4":"18.6","5":"190","6":"3700","7":"female","8":"2008"},{"1":"Adelie","2":"Dream","3":"40.3","4":"18.5","5":"196","6":"4350","7":"male","8":"2008"},{"1":"Adelie","2":"Dream","3":"33.1","4":"16.1","5":"178","6":"2900","7":"female","8":"2008"},{"1":"Adelie","2":"Dream","3":"43.2","4":"18.5","5":"192","6":"4100","7":"male","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"35.0","4":"17.9","5":"192","6":"3725","7":"female","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"41.0","4":"20.0","5":"203","6":"4725","7":"male","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"37.7","4":"16.0","5":"183","6":"3075","7":"female","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"37.8","4":"20.0","5":"190","6":"4250","7":"male","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"37.9","4":"18.6","5":"193","6":"2925","7":"female","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"39.7","4":"18.9","5":"184","6":"3550","7":"male","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"38.6","4":"17.2","5":"199","6":"3750","7":"female","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"38.2","4":"20.0","5":"190","6":"3900","7":"male","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"38.1","4":"17.0","5":"181","6":"3175","7":"female","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"43.2","4":"19.0","5":"197","6":"4775","7":"male","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"38.1","4":"16.5","5":"198","6":"3825","7":"female","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"45.6","4":"20.3","5":"191","6":"4600","7":"male","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"39.7","4":"17.7","5":"193","6":"3200","7":"female","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"42.2","4":"19.5","5":"197","6":"4275","7":"male","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"39.6","4":"20.7","5":"191","6":"3900","7":"female","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"42.7","4":"18.3","5":"196","6":"4075","7":"male","8":"2009"},{"1":"Adelie","2":"Torgersen","3":"38.6","4":"17.0","5":"188","6":"2900","7":"female","8":"2009"},{"1":"Adelie","2":"Torgersen","3":"37.3","4":"20.5","5":"199","6":"3775","7":"male","8":"2009"},{"1":"Adelie","2":"Torgersen","3":"35.7","4":"17.0","5":"189","6":"3350","7":"female","8":"2009"},{"1":"Adelie","2":"Torgersen","3":"41.1","4":"18.6","5":"189","6":"3325","7":"male","8":"2009"},{"1":"Adelie","2":"Torgersen","3":"36.2","4":"17.2","5":"187","6":"3150","7":"female","8":"2009"},{"1":"Adelie","2":"Torgersen","3":"37.7","4":"19.8","5":"198","6":"3500","7":"male","8":"2009"},{"1":"Adelie","2":"Torgersen","3":"40.2","4":"17.0","5":"176","6":"3450","7":"female","8":"2009"},{"1":"Adelie","2":"Torgersen","3":"41.4","4":"18.5","5":"202","6":"3875","7":"male","8":"2009"},{"1":"Adelie","2":"Torgersen","3":"35.2","4":"15.9","5":"186","6":"3050","7":"female","8":"2009"},{"1":"Adelie","2":"Torgersen","3":"40.6","4":"19.0","5":"199","6":"4000","7":"male","8":"2009"},{"1":"Adelie","2":"Torgersen","3":"38.8","4":"17.6","5":"191","6":"3275","7":"female","8":"2009"},{"1":"Adelie","2":"Torgersen","3":"41.5","4":"18.3","5":"195","6":"4300","7":"male","8":"2009"},{"1":"Adelie","2":"Torgersen","3":"39.0","4":"17.1","5":"191","6":"3050","7":"female","8":"2009"},{"1":"Adelie","2":"Torgersen","3":"44.1","4":"18.0","5":"210","6":"4000","7":"male","8":"2009"},{"1":"Adelie","2":"Torgersen","3":"38.5","4":"17.9","5":"190","6":"3325","7":"female","8":"2009"},{"1":"Adelie","2":"Torgersen","3":"43.1","4":"19.2","5":"197","6":"3500","7":"male","8":"2009"},{"1":"Adelie","2":"Dream","3":"36.8","4":"18.5","5":"193","6":"3500","7":"female","8":"2009"},{"1":"Adelie","2":"Dream","3":"37.5","4":"18.5","5":"199","6":"4475","7":"male","8":"2009"},{"1":"Adelie","2":"Dream","3":"38.1","4":"17.6","5":"187","6":"3425","7":"female","8":"2009"},{"1":"Adelie","2":"Dream","3":"41.1","4":"17.5","5":"190","6":"3900","7":"male","8":"2009"},{"1":"Adelie","2":"Dream","3":"35.6","4":"17.5","5":"191","6":"3175","7":"female","8":"2009"},{"1":"Adelie","2":"Dream","3":"40.2","4":"20.1","5":"200","6":"3975","7":"male","8":"2009"},{"1":"Adelie","2":"Dream","3":"37.0","4":"16.5","5":"185","6":"3400","7":"female","8":"2009"},{"1":"Adelie","2":"Dream","3":"39.7","4":"17.9","5":"193","6":"4250","7":"male","8":"2009"},{"1":"Adelie","2":"Dream","3":"40.2","4":"17.1","5":"193","6":"3400","7":"female","8":"2009"},{"1":"Adelie","2":"Dream","3":"40.6","4":"17.2","5":"187","6":"3475","7":"male","8":"2009"},{"1":"Adelie","2":"Dream","3":"32.1","4":"15.5","5":"188","6":"3050","7":"female","8":"2009"},{"1":"Adelie","2":"Dream","3":"40.7","4":"17.0","5":"190","6":"3725","7":"male","8":"2009"},{"1":"Adelie","2":"Dream","3":"37.3","4":"16.8","5":"192","6":"3000","7":"female","8":"2009"},{"1":"Adelie","2":"Dream","3":"39.0","4":"18.7","5":"185","6":"3650","7":"male","8":"2009"},{"1":"Adelie","2":"Dream","3":"39.2","4":"18.6","5":"190","6":"4250","7":"male","8":"2009"},{"1":"Adelie","2":"Dream","3":"36.6","4":"18.4","5":"184","6":"3475","7":"female","8":"2009"},{"1":"Adelie","2":"Dream","3":"36.0","4":"17.8","5":"195","6":"3450","7":"female","8":"2009"},{"1":"Adelie","2":"Dream","3":"37.8","4":"18.1","5":"193","6":"3750","7":"male","8":"2009"},{"1":"Adelie","2":"Dream","3":"36.0","4":"17.1","5":"187","6":"3700","7":"female","8":"2009"},{"1":"Adelie","2":"Dream","3":"41.5","4":"18.5","5":"201","6":"4000","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"46.1","4":"13.2","5":"211","6":"4500","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"50.0","4":"16.3","5":"230","6":"5700","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"48.7","4":"14.1","5":"210","6":"4450","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"50.0","4":"15.2","5":"218","6":"5700","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"47.6","4":"14.5","5":"215","6":"5400","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"46.5","4":"13.5","5":"210","6":"4550","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"45.4","4":"14.6","5":"211","6":"4800","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"46.7","4":"15.3","5":"219","6":"5200","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"43.3","4":"13.4","5":"209","6":"4400","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"46.8","4":"15.4","5":"215","6":"5150","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"40.9","4":"13.7","5":"214","6":"4650","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"49.0","4":"16.1","5":"216","6":"5550","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"45.5","4":"13.7","5":"214","6":"4650","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"48.4","4":"14.6","5":"213","6":"5850","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"45.8","4":"14.6","5":"210","6":"4200","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"49.3","4":"15.7","5":"217","6":"5850","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"42.0","4":"13.5","5":"210","6":"4150","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"49.2","4":"15.2","5":"221","6":"6300","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"46.2","4":"14.5","5":"209","6":"4800","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"48.7","4":"15.1","5":"222","6":"5350","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"50.2","4":"14.3","5":"218","6":"5700","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"45.1","4":"14.5","5":"215","6":"5000","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"46.5","4":"14.5","5":"213","6":"4400","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"46.3","4":"15.8","5":"215","6":"5050","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"42.9","4":"13.1","5":"215","6":"5000","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"46.1","4":"15.1","5":"215","6":"5100","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"44.5","4":"14.3","5":"216","6":"4100","7":"NA","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"47.8","4":"15.0","5":"215","6":"5650","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"48.2","4":"14.3","5":"210","6":"4600","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"50.0","4":"15.3","5":"220","6":"5550","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"47.3","4":"15.3","5":"222","6":"5250","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"42.8","4":"14.2","5":"209","6":"4700","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"45.1","4":"14.5","5":"207","6":"5050","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"59.6","4":"17.0","5":"230","6":"6050","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"49.1","4":"14.8","5":"220","6":"5150","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"48.4","4":"16.3","5":"220","6":"5400","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"42.6","4":"13.7","5":"213","6":"4950","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"44.4","4":"17.3","5":"219","6":"5250","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"44.0","4":"13.6","5":"208","6":"4350","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"48.7","4":"15.7","5":"208","6":"5350","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"42.7","4":"13.7","5":"208","6":"3950","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"49.6","4":"16.0","5":"225","6":"5700","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"45.3","4":"13.7","5":"210","6":"4300","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"49.6","4":"15.0","5":"216","6":"4750","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"50.5","4":"15.9","5":"222","6":"5550","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"43.6","4":"13.9","5":"217","6":"4900","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"45.5","4":"13.9","5":"210","6":"4200","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"50.5","4":"15.9","5":"225","6":"5400","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"44.9","4":"13.3","5":"213","6":"5100","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"45.2","4":"15.8","5":"215","6":"5300","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"46.6","4":"14.2","5":"210","6":"4850","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"48.5","4":"14.1","5":"220","6":"5300","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"45.1","4":"14.4","5":"210","6":"4400","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"50.1","4":"15.0","5":"225","6":"5000","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"46.5","4":"14.4","5":"217","6":"4900","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"45.0","4":"15.4","5":"220","6":"5050","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"43.8","4":"13.9","5":"208","6":"4300","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"45.5","4":"15.0","5":"220","6":"5000","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"43.2","4":"14.5","5":"208","6":"4450","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"50.4","4":"15.3","5":"224","6":"5550","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"45.3","4":"13.8","5":"208","6":"4200","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"46.2","4":"14.9","5":"221","6":"5300","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"45.7","4":"13.9","5":"214","6":"4400","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"54.3","4":"15.7","5":"231","6":"5650","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"45.8","4":"14.2","5":"219","6":"4700","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"49.8","4":"16.8","5":"230","6":"5700","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"46.2","4":"14.4","5":"214","6":"4650","7":"NA","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"49.5","4":"16.2","5":"229","6":"5800","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"43.5","4":"14.2","5":"220","6":"4700","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"50.7","4":"15.0","5":"223","6":"5550","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"47.7","4":"15.0","5":"216","6":"4750","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"46.4","4":"15.6","5":"221","6":"5000","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"48.2","4":"15.6","5":"221","6":"5100","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"46.5","4":"14.8","5":"217","6":"5200","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"46.4","4":"15.0","5":"216","6":"4700","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"48.6","4":"16.0","5":"230","6":"5800","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"47.5","4":"14.2","5":"209","6":"4600","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"51.1","4":"16.3","5":"220","6":"6000","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"45.2","4":"13.8","5":"215","6":"4750","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"45.2","4":"16.4","5":"223","6":"5950","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"49.1","4":"14.5","5":"212","6":"4625","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"52.5","4":"15.6","5":"221","6":"5450","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"47.4","4":"14.6","5":"212","6":"4725","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"50.0","4":"15.9","5":"224","6":"5350","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"44.9","4":"13.8","5":"212","6":"4750","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"50.8","4":"17.3","5":"228","6":"5600","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"43.4","4":"14.4","5":"218","6":"4600","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"51.3","4":"14.2","5":"218","6":"5300","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"47.5","4":"14.0","5":"212","6":"4875","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"52.1","4":"17.0","5":"230","6":"5550","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"47.5","4":"15.0","5":"218","6":"4950","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"52.2","4":"17.1","5":"228","6":"5400","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"45.5","4":"14.5","5":"212","6":"4750","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"49.5","4":"16.1","5":"224","6":"5650","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"44.5","4":"14.7","5":"214","6":"4850","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"50.8","4":"15.7","5":"226","6":"5200","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"49.4","4":"15.8","5":"216","6":"4925","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"46.9","4":"14.6","5":"222","6":"4875","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"48.4","4":"14.4","5":"203","6":"4625","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"51.1","4":"16.5","5":"225","6":"5250","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"48.5","4":"15.0","5":"219","6":"4850","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"55.9","4":"17.0","5":"228","6":"5600","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"47.2","4":"15.5","5":"215","6":"4975","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"49.1","4":"15.0","5":"228","6":"5500","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"47.3","4":"13.8","5":"216","6":"4725","7":"NA","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"46.8","4":"16.1","5":"215","6":"5500","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"41.7","4":"14.7","5":"210","6":"4700","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"53.4","4":"15.8","5":"219","6":"5500","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"43.3","4":"14.0","5":"208","6":"4575","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"48.1","4":"15.1","5":"209","6":"5500","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"50.5","4":"15.2","5":"216","6":"5000","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"49.8","4":"15.9","5":"229","6":"5950","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"43.5","4":"15.2","5":"213","6":"4650","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"51.5","4":"16.3","5":"230","6":"5500","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"46.2","4":"14.1","5":"217","6":"4375","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"55.1","4":"16.0","5":"230","6":"5850","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"44.5","4":"15.7","5":"217","6":"4875","7":"NA","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"48.8","4":"16.2","5":"222","6":"6000","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"47.2","4":"13.7","5":"214","6":"4925","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"NA","4":"NA","5":"NA","6":"NA","7":"NA","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"46.8","4":"14.3","5":"215","6":"4850","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"50.4","4":"15.7","5":"222","6":"5750","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"45.2","4":"14.8","5":"212","6":"5200","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"49.9","4":"16.1","5":"213","6":"5400","7":"male","8":"2009"},{"1":"Chinstrap","2":"Dream","3":"46.5","4":"17.9","5":"192","6":"3500","7":"female","8":"2007"},{"1":"Chinstrap","2":"Dream","3":"50.0","4":"19.5","5":"196","6":"3900","7":"male","8":"2007"},{"1":"Chinstrap","2":"Dream","3":"51.3","4":"19.2","5":"193","6":"3650","7":"male","8":"2007"},{"1":"Chinstrap","2":"Dream","3":"45.4","4":"18.7","5":"188","6":"3525","7":"female","8":"2007"},{"1":"Chinstrap","2":"Dream","3":"52.7","4":"19.8","5":"197","6":"3725","7":"male","8":"2007"},{"1":"Chinstrap","2":"Dream","3":"45.2","4":"17.8","5":"198","6":"3950","7":"female","8":"2007"},{"1":"Chinstrap","2":"Dream","3":"46.1","4":"18.2","5":"178","6":"3250","7":"female","8":"2007"},{"1":"Chinstrap","2":"Dream","3":"51.3","4":"18.2","5":"197","6":"3750","7":"male","8":"2007"},{"1":"Chinstrap","2":"Dream","3":"46.0","4":"18.9","5":"195","6":"4150","7":"female","8":"2007"},{"1":"Chinstrap","2":"Dream","3":"51.3","4":"19.9","5":"198","6":"3700","7":"male","8":"2007"},{"1":"Chinstrap","2":"Dream","3":"46.6","4":"17.8","5":"193","6":"3800","7":"female","8":"2007"},{"1":"Chinstrap","2":"Dream","3":"51.7","4":"20.3","5":"194","6":"3775","7":"male","8":"2007"},{"1":"Chinstrap","2":"Dream","3":"47.0","4":"17.3","5":"185","6":"3700","7":"female","8":"2007"},{"1":"Chinstrap","2":"Dream","3":"52.0","4":"18.1","5":"201","6":"4050","7":"male","8":"2007"},{"1":"Chinstrap","2":"Dream","3":"45.9","4":"17.1","5":"190","6":"3575","7":"female","8":"2007"},{"1":"Chinstrap","2":"Dream","3":"50.5","4":"19.6","5":"201","6":"4050","7":"male","8":"2007"},{"1":"Chinstrap","2":"Dream","3":"50.3","4":"20.0","5":"197","6":"3300","7":"male","8":"2007"},{"1":"Chinstrap","2":"Dream","3":"58.0","4":"17.8","5":"181","6":"3700","7":"female","8":"2007"},{"1":"Chinstrap","2":"Dream","3":"46.4","4":"18.6","5":"190","6":"3450","7":"female","8":"2007"},{"1":"Chinstrap","2":"Dream","3":"49.2","4":"18.2","5":"195","6":"4400","7":"male","8":"2007"},{"1":"Chinstrap","2":"Dream","3":"42.4","4":"17.3","5":"181","6":"3600","7":"female","8":"2007"},{"1":"Chinstrap","2":"Dream","3":"48.5","4":"17.5","5":"191","6":"3400","7":"male","8":"2007"},{"1":"Chinstrap","2":"Dream","3":"43.2","4":"16.6","5":"187","6":"2900","7":"female","8":"2007"},{"1":"Chinstrap","2":"Dream","3":"50.6","4":"19.4","5":"193","6":"3800","7":"male","8":"2007"},{"1":"Chinstrap","2":"Dream","3":"46.7","4":"17.9","5":"195","6":"3300","7":"female","8":"2007"},{"1":"Chinstrap","2":"Dream","3":"52.0","4":"19.0","5":"197","6":"4150","7":"male","8":"2007"},{"1":"Chinstrap","2":"Dream","3":"50.5","4":"18.4","5":"200","6":"3400","7":"female","8":"2008"},{"1":"Chinstrap","2":"Dream","3":"49.5","4":"19.0","5":"200","6":"3800","7":"male","8":"2008"},{"1":"Chinstrap","2":"Dream","3":"46.4","4":"17.8","5":"191","6":"3700","7":"female","8":"2008"},{"1":"Chinstrap","2":"Dream","3":"52.8","4":"20.0","5":"205","6":"4550","7":"male","8":"2008"},{"1":"Chinstrap","2":"Dream","3":"40.9","4":"16.6","5":"187","6":"3200","7":"female","8":"2008"},{"1":"Chinstrap","2":"Dream","3":"54.2","4":"20.8","5":"201","6":"4300","7":"male","8":"2008"},{"1":"Chinstrap","2":"Dream","3":"42.5","4":"16.7","5":"187","6":"3350","7":"female","8":"2008"},{"1":"Chinstrap","2":"Dream","3":"51.0","4":"18.8","5":"203","6":"4100","7":"male","8":"2008"},{"1":"Chinstrap","2":"Dream","3":"49.7","4":"18.6","5":"195","6":"3600","7":"male","8":"2008"},{"1":"Chinstrap","2":"Dream","3":"47.5","4":"16.8","5":"199","6":"3900","7":"female","8":"2008"},{"1":"Chinstrap","2":"Dream","3":"47.6","4":"18.3","5":"195","6":"3850","7":"female","8":"2008"},{"1":"Chinstrap","2":"Dream","3":"52.0","4":"20.7","5":"210","6":"4800","7":"male","8":"2008"},{"1":"Chinstrap","2":"Dream","3":"46.9","4":"16.6","5":"192","6":"2700","7":"female","8":"2008"},{"1":"Chinstrap","2":"Dream","3":"53.5","4":"19.9","5":"205","6":"4500","7":"male","8":"2008"},{"1":"Chinstrap","2":"Dream","3":"49.0","4":"19.5","5":"210","6":"3950","7":"male","8":"2008"},{"1":"Chinstrap","2":"Dream","3":"46.2","4":"17.5","5":"187","6":"3650","7":"female","8":"2008"},{"1":"Chinstrap","2":"Dream","3":"50.9","4":"19.1","5":"196","6":"3550","7":"male","8":"2008"},{"1":"Chinstrap","2":"Dream","3":"45.5","4":"17.0","5":"196","6":"3500","7":"female","8":"2008"},{"1":"Chinstrap","2":"Dream","3":"50.9","4":"17.9","5":"196","6":"3675","7":"female","8":"2009"},{"1":"Chinstrap","2":"Dream","3":"50.8","4":"18.5","5":"201","6":"4450","7":"male","8":"2009"},{"1":"Chinstrap","2":"Dream","3":"50.1","4":"17.9","5":"190","6":"3400","7":"female","8":"2009"},{"1":"Chinstrap","2":"Dream","3":"49.0","4":"19.6","5":"212","6":"4300","7":"male","8":"2009"},{"1":"Chinstrap","2":"Dream","3":"51.5","4":"18.7","5":"187","6":"3250","7":"male","8":"2009"},{"1":"Chinstrap","2":"Dream","3":"49.8","4":"17.3","5":"198","6":"3675","7":"female","8":"2009"},{"1":"Chinstrap","2":"Dream","3":"48.1","4":"16.4","5":"199","6":"3325","7":"female","8":"2009"},{"1":"Chinstrap","2":"Dream","3":"51.4","4":"19.0","5":"201","6":"3950","7":"male","8":"2009"},{"1":"Chinstrap","2":"Dream","3":"45.7","4":"17.3","5":"193","6":"3600","7":"female","8":"2009"},{"1":"Chinstrap","2":"Dream","3":"50.7","4":"19.7","5":"203","6":"4050","7":"male","8":"2009"},{"1":"Chinstrap","2":"Dream","3":"42.5","4":"17.3","5":"187","6":"3350","7":"female","8":"2009"},{"1":"Chinstrap","2":"Dream","3":"52.2","4":"18.8","5":"197","6":"3450","7":"male","8":"2009"},{"1":"Chinstrap","2":"Dream","3":"45.2","4":"16.6","5":"191","6":"3250","7":"female","8":"2009"},{"1":"Chinstrap","2":"Dream","3":"49.3","4":"19.9","5":"203","6":"4050","7":"male","8":"2009"},{"1":"Chinstrap","2":"Dream","3":"50.2","4":"18.8","5":"202","6":"3800","7":"male","8":"2009"},{"1":"Chinstrap","2":"Dream","3":"45.6","4":"19.4","5":"194","6":"3525","7":"female","8":"2009"},{"1":"Chinstrap","2":"Dream","3":"51.9","4":"19.5","5":"206","6":"3950","7":"male","8":"2009"},{"1":"Chinstrap","2":"Dream","3":"46.8","4":"16.5","5":"189","6":"3650","7":"female","8":"2009"},{"1":"Chinstrap","2":"Dream","3":"45.7","4":"17.0","5":"195","6":"3650","7":"female","8":"2009"},{"1":"Chinstrap","2":"Dream","3":"55.8","4":"19.8","5":"207","6":"4000","7":"male","8":"2009"},{"1":"Chinstrap","2":"Dream","3":"43.5","4":"18.1","5":"202","6":"3400","7":"female","8":"2009"},{"1":"Chinstrap","2":"Dream","3":"49.6","4":"18.2","5":"193","6":"3775","7":"male","8":"2009"},{"1":"Chinstrap","2":"Dream","3":"50.8","4":"19.0","5":"210","6":"4100","7":"male","8":"2009"},{"1":"Chinstrap","2":"Dream","3":"50.2","4":"18.7","5":"198","6":"3775","7":"female","8":"2009"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+</section>
+<section id="令和2年度-学校保健統計調査-都道府県別の身長体重の平均値及び標準偏差" class="level2" data-number="B.2">
+<h2 data-number="B.2" class="anchored" data-anchor-id="令和2年度-学校保健統計調査-都道府県別の身長体重の平均値及び標準偏差"><span class="header-section-number">B.2</span> 令和2年度 学校保健統計調査 都道府県別の身長・体重の平均値及び標準偏差</h2>
+<p>e-Statで公開されている<a href="https://www.e-stat.go.jp/stat-search/files?page=1&amp;layout=datalist&amp;toukei=00400002&amp;tstat=000001011648&amp;cycle=0&amp;tclass1=000001156246&amp;tclass2=000001156248&amp;stat_infid=000032108465&amp;tclass3val=0">ファイル</a>をRで処理しました。</p>
+<div class="cell">
+<details class="code-fold">
+<summary>コードを表示</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-overflow-scroll code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">file.exists</span>(<span class="st">"data-raw/令和2年度_学校保健統計調査_都道府県別_身長と体重_5歳.csv"</span>) <span class="sc">==</span> <span class="cn">FALSE</span>) {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">download.file</span>(<span class="st">"https://www.e-stat.go.jp/stat-search/file-download?statInfId=000032108465&amp;fileKind=0"</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">destfile =</span> <span class="st">"data-raw/r2_hoken_tokei_05.xls"</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  df_hoken_toukei <span class="ot">&lt;-</span> </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    readxl<span class="sc">::</span><span class="fu">read_xls</span>(<span class="st">"data-raw/r2_hoken_tokei_05.xls"</span>, </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">sheet =</span> <span class="dv">1</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">range =</span> <span class="st">"B8:J55"</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>                     <span class="at">col_names =</span> <span class="fu">c</span>(<span class="st">"区分"</span>,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>                                   <span class="fu">paste</span>(<span class="st">"男"</span>,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>                                         <span class="fu">c</span>(<span class="fu">paste</span>(<span class="st">"身長"</span>,</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>                                                 <span class="fu">c</span>(<span class="st">"平均値"</span>, <span class="st">"標準偏差"</span>),</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>                                                 <span class="at">sep =</span> <span class="st">"_"</span>), </span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>                                           <span class="fu">paste</span>(<span class="st">"体重"</span>,</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>                                                 <span class="fu">c</span>(<span class="st">"平均値"</span>, <span class="st">"標準偏差"</span>),</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>                                                 <span class="at">sep =</span> <span class="st">"_"</span>)),</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">sep =</span> <span class="st">"_"</span>),</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>                                   <span class="fu">paste</span>(<span class="st">"女"</span>,</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>                                         <span class="fu">c</span>(<span class="fu">paste</span>(<span class="st">"身長"</span>,</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>                                                 <span class="fu">c</span>(<span class="st">"平均値"</span>, <span class="st">"標準偏差"</span>),</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>                                                 <span class="at">sep =</span> <span class="st">"_"</span>), </span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>                                           <span class="fu">paste</span>(<span class="st">"体重"</span>,</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>                                                 <span class="fu">c</span>(<span class="st">"平均値"</span>, <span class="st">"標準偏差"</span>),</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>                                                 <span class="at">sep =</span> <span class="st">"_"</span>)),</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">sep =</span> <span class="st">"_"</span>))) <span class="sc">|&gt;</span> </span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(区分 <span class="ot">=</span> stringr<span class="sc">::</span><span class="fu">str_squish</span>(区分) <span class="sc">|&gt;</span> </span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>                    stringr<span class="sc">::</span><span class="fu">str_remove_all</span>(<span class="st">"[:space:]"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">filter</span>(区分 <span class="sc">!=</span> <span class="st">"全国"</span>) <span class="sc">|&gt;</span>  </span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">arrange</span>(dplyr<span class="sc">::</span><span class="fu">desc</span>(男_身長_平均値))</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>  df_hoken_toukei <span class="sc">|&gt;</span> </span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    readr<span class="sc">::</span><span class="fu">write_csv</span>(<span class="st">"data-raw/令和2年度_学校保健統計調査_都道府県別_身長と体重_5歳.csv"</span>)</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>  df_hoken_toukei <span class="ot">&lt;-</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>    readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"data-raw/令和2年度_学校保健統計調査_都道府県別_身長と体重_5歳.csv"</span>,</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>                    <span class="at">col_types =</span> <span class="st">"cdddddddd"</span>)</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df_hoken_toukei</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["区分"],"name":[1],"type":["chr"],"align":["left"]},{"label":["男_身長_平均値"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["男_身長_標準偏差"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["男_体重_平均値"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["男_体重_標準偏差"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["女_身長_平均値"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["女_身長_標準偏差"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["女_体重_平均値"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["女_体重_標準偏差"],"name":[9],"type":["dbl"],"align":["right"]}],"data":[{"1":"宮城","2":"112.8","3":"4.77","4":"20.1","5":"3.12","6":"111.6","7":"4.77","8":"19.6","9":"3.31"},{"1":"石川","2":"112.6","3":"5.00","4":"19.6","5":"2.78","6":"111.5","7":"4.90","8":"19.2","9":"2.83"},{"1":"奈良","2":"112.6","3":"4.67","4":"19.8","5":"2.85","6":"111.0","7":"4.63","8":"19.1","9":"3.05"},{"1":"東京","2":"112.5","3":"5.00","4":"19.8","5":"2.99","6":"111.5","7":"5.06","8":"19.3","9":"2.78"},{"1":"富山","2":"112.4","3":"4.93","4":"19.5","5":"2.89","6":"110.8","7":"4.69","8":"19.0","9":"2.51"},{"1":"兵庫","2":"112.3","3":"4.94","4":"19.8","5":"2.94","6":"111.0","7":"4.74","8":"19.1","9":"2.65"},{"1":"和歌山","2":"112.2","3":"5.16","4":"19.8","5":"2.98","6":"111.3","7":"5.08","8":"19.6","9":"3.07"},{"1":"福井","2":"112.1","3":"4.88","4":"19.4","5":"2.75","6":"111.3","7":"4.64","8":"19.0","9":"2.64"},{"1":"京都","2":"112.1","3":"5.07","4":"19.5","5":"2.91","6":"111.4","7":"4.77","8":"19.3","9":"2.86"},{"1":"秋田","2":"112.0","3":"5.12","4":"19.8","5":"3.56","6":"111.2","7":"4.88","8":"19.4","9":"2.98"},{"1":"山形","2":"112.0","3":"4.80","4":"19.5","5":"2.98","6":"111.4","7":"4.84","8":"19.4","9":"2.97"},{"1":"神奈川","2":"111.9","3":"4.70","4":"19.6","5":"2.89","6":"111.0","7":"4.98","8":"19.1","9":"2.82"},{"1":"群馬","2":"111.7","3":"4.71","4":"19.7","5":"3.51","6":"110.9","7":"4.68","8":"19.5","9":"3.23"},{"1":"千葉","2":"111.7","3":"4.94","4":"19.4","5":"2.97","6":"110.7","7":"5.03","8":"19.0","9":"2.70"},{"1":"大分","2":"111.7","3":"4.54","4":"19.6","5":"2.75","6":"110.6","7":"4.65","8":"19.0","9":"2.65"},{"1":"大阪","2":"111.6","3":"4.74","4":"19.3","5":"2.80","6":"110.4","7":"5.06","8":"18.9","9":"2.66"},{"1":"北海道","2":"111.5","3":"4.82","4":"19.6","5":"2.93","6":"110.5","7":"4.83","8":"19.0","9":"2.90"},{"1":"佐賀","2":"111.5","3":"5.03","4":"19.5","5":"2.99","6":"110.5","7":"4.77","8":"19.1","9":"2.58"},{"1":"埼玉","2":"111.4","3":"5.04","4":"19.5","5":"3.05","6":"110.7","7":"4.86","8":"19.0","9":"2.77"},{"1":"岐阜","2":"111.4","3":"4.76","4":"19.3","5":"2.74","6":"110.6","7":"4.33","8":"18.8","9":"2.55"},{"1":"静岡","2":"111.4","3":"4.79","4":"19.2","5":"2.67","6":"110.5","7":"4.54","8":"18.8","9":"2.34"},{"1":"愛知","2":"111.4","3":"4.84","4":"19.2","5":"2.95","6":"110.6","7":"4.89","8":"18.9","9":"2.63"},{"1":"福岡","2":"111.4","3":"4.76","4":"19.5","5":"2.99","6":"110.4","7":"4.84","8":"19.2","9":"2.92"},{"1":"青森","2":"111.3","3":"5.05","4":"19.7","5":"2.97","6":"111.1","7":"5.05","8":"19.9","9":"3.15"},{"1":"福島","2":"111.3","3":"4.65","4":"19.4","5":"3.04","6":"109.6","7":"4.84","8":"18.8","9":"2.64"},{"1":"茨城","2":"111.2","3":"4.92","4":"19.3","5":"2.87","6":"109.7","7":"5.06","8":"19.0","9":"3.27"},{"1":"長野","2":"111.2","3":"4.65","4":"19.1","5":"2.71","6":"110.0","7":"4.50","8":"18.6","9":"2.40"},{"1":"滋賀","2":"111.2","3":"4.85","4":"19.1","5":"2.97","6":"110.4","7":"5.09","8":"18.7","9":"2.59"},{"1":"山口","2":"111.2","3":"4.78","4":"19.3","5":"2.57","6":"109.8","7":"5.12","8":"18.8","9":"2.84"},{"1":"山梨","2":"111.1","3":"5.47","4":"19.0","5":"3.20","6":"110.8","7":"5.05","8":"19.1","9":"2.91"},{"1":"新潟","2":"111.0","3":"4.66","4":"19.1","5":"2.47","6":"110.3","7":"4.56","8":"18.8","9":"2.54"},{"1":"島根","2":"111.0","3":"5.07","4":"19.1","5":"2.83","6":"110.1","7":"4.64","8":"18.4","9":"2.36"},{"1":"岡山","2":"111.0","3":"4.88","4":"19.2","5":"2.83","6":"109.9","7":"4.74","8":"18.8","9":"2.54"},{"1":"三重","2":"110.8","3":"4.97","4":"19.2","5":"2.78","6":"110.5","7":"4.71","8":"19.0","9":"2.69"},{"1":"香川","2":"110.8","3":"4.62","4":"19.2","5":"2.74","6":"109.4","7":"4.75","8":"18.7","9":"2.74"},{"1":"熊本","2":"110.8","3":"4.89","4":"19.1","5":"2.67","6":"109.8","7":"4.71","8":"18.8","9":"2.75"},{"1":"岩手","2":"110.7","3":"4.66","4":"19.1","5":"2.82","6":"110.4","7":"4.67","8":"19.3","9":"2.90"},{"1":"栃木","2":"110.6","3":"4.77","4":"19.0","5":"2.74","6":"109.8","7":"4.56","8":"18.9","9":"2.79"},{"1":"広島","2":"110.6","3":"4.94","4":"19.2","5":"2.65","6":"109.7","7":"4.85","8":"18.8","9":"2.44"},{"1":"愛媛","2":"110.5","3":"4.96","4":"19.1","5":"2.84","6":"109.6","7":"5.01","8":"18.9","9":"2.74"},{"1":"高知","2":"110.4","3":"4.51","4":"18.9","5":"2.38","6":"109.5","7":"5.48","8":"18.6","9":"3.13"},{"1":"宮崎","2":"110.4","3":"4.97","4":"19.1","5":"2.45","6":"109.0","7":"4.71","8":"18.6","9":"2.69"},{"1":"沖縄","2":"110.4","3":"4.84","4":"19.0","5":"2.56","6":"109.9","7":"4.75","8":"19.0","9":"2.99"},{"1":"鳥取","2":"110.3","3":"4.59","4":"18.9","5":"2.84","6":"109.6","7":"4.94","8":"18.7","9":"2.56"},{"1":"鹿児島","2":"110.3","3":"4.98","4":"19.2","5":"2.75","6":"109.2","7":"4.96","8":"18.6","9":"2.54"},{"1":"長崎","2":"110.2","3":"4.71","4":"19.0","5":"2.68","6":"109.9","7":"5.15","8":"19.1","9":"2.91"},{"1":"徳島","2":"110.1","3":"4.94","4":"19.2","5":"2.95","6":"109.5","7":"4.58","8":"19.1","9":"2.82"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+</section>
+<section id="とくしま動物園で飼育される動物の体の大きさと体重" class="level2" data-number="B.3">
+<h2 data-number="B.3" class="anchored" data-anchor-id="とくしま動物園で飼育される動物の体の大きさと体重"><span class="header-section-number">B.3</span> とくしま動物園で飼育される動物の体の大きさと体重</h2>
+<p><a href="images/animal_silhouette.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="images/animal_silhouette.png" class="img-fluid"></a></p>
+<ul>
+<li>名称: <strong>動物データ</strong></li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>コードを表示</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-overflow-scroll code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">file.exists</span>(<span class="st">"data-raw/tokushima_zoo_animals22.csv"</span>)) {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(dplyr)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(rvest)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  url <span class="ot">&lt;-</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://www.city.tokushima.tokushima.jp/zoo/gallery/ichiran.html"</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">read_html</span>(url)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 2016-04-01</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  x <span class="sc">|&gt;</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_element</span>(<span class="at">css =</span> <span class="st">'#main &gt; div.h1bg &gt; div.update.clearfix &gt; p'</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_text</span>()</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  animals <span class="ot">&lt;-</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    x <span class="sc">|&gt;</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_elements</span>(<span class="at">css =</span> <span class="st">'#main &gt; div.main_inner &gt; div &gt; p &gt; span'</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_text</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    ensurer<span class="sc">::</span><span class="fu">ensure</span>(<span class="fu">length</span>(.) <span class="sc">==</span> <span class="dv">22</span>)</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># リスザルはリスザル属の総称</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ポニーは肩までの高さが147cm以下の馬の総称</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>  df_zoo <span class="ot">&lt;-</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>      <span class="at">taxon =</span> <span class="fu">c</span>(<span class="st">"食肉類"</span>, <span class="st">"鳥類"</span>, <span class="st">"食肉類"</span>, <span class="st">"鳥類"</span>, <span class="st">"霊長類"</span>,</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>                <span class="st">"霊長類"</span>, <span class="st">"霊長類"</span>, <span class="st">"食肉類"</span>, <span class="st">"齧歯類"</span>, <span class="st">"食肉類"</span>,</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>                <span class="st">"鳥類"</span>, <span class="st">"偶蹄類"</span>, <span class="st">"食肉類"</span>, <span class="st">"食肉類"</span>, <span class="st">"鳥類"</span>,</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>                <span class="st">"食肉類"</span>, <span class="st">"霊長類"</span>, <span class="st">"鳥類"</span>, <span class="st">"鯨偶蹄類"</span>, <span class="st">"奇蹄類"</span>,</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>                <span class="st">"齧歯類"</span>, <span class="st">"鯨偶蹄類"</span>),</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>      <span class="at">name =</span> animals,</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>      <span class="at">body_length_cm =</span> <span class="fu">c</span>(<span class="fl">63.5</span>, <span class="dv">100</span>, <span class="dv">64</span>, <span class="dv">110</span>, <span class="dv">85</span>,</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>                         <span class="dv">66</span>, <span class="dv">80</span>, <span class="dv">168</span>, <span class="dv">134</span>, <span class="dv">250</span>,</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>                         <span class="dv">130</span>, <span class="dv">175</span>, <span class="dv">31</span>, <span class="cn">NA_real_</span>, <span class="fl">1.2</span>,</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>                         <span class="dv">250</span>, <span class="dv">35</span>, <span class="dv">69</span>, <span class="cn">NA_real_</span>, <span class="cn">NA_real_</span>,</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>                         <span class="dv">40</span>, <span class="cn">NA_real_</span>),</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>      <span class="at">weight_kg =</span> <span class="fu">c</span>(<span class="dv">6</span>, <span class="fl">3.5</span>, <span class="fl">5.4</span>, <span class="fl">6.5</span>, <span class="dv">60</span>,</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>                    <span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">80</span>, <span class="dv">66</span>, <span class="dv">225</span>,</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>                    <span class="co"># ホッキョクグマは平均体重のうち最大値を採用</span></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>                    <span class="dv">9</span>, <span class="dv">220</span>, <span class="fl">0.9</span>, <span class="fl">30.3</span>, <span class="dv">15</span>,</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>                    <span class="dv">410</span>, <span class="fl">1.1</span>, <span class="dv">6</span>, <span class="dv">140</span>, <span class="cn">NA_real_</span>,</span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>                    <span class="fl">1.5</span>, <span class="cn">NA_real_</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>    assertr<span class="sc">::</span><span class="fu">verify</span>(<span class="fu">dim</span>(.) <span class="sc">==</span> <span class="fu">c</span>(<span class="dv">22</span>, <span class="dv">4</span>))</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>  df_zoo <span class="sc">|&gt;</span> </span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>    readr<span class="sc">::</span><span class="fu">write_csv</span>(<span class="st">"data-raw/tokushima_zoo_animals22.csv"</span>)</span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>  df_zoo <span class="ot">&lt;-</span></span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>    readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"data-raw/tokushima_zoo_animals22.csv"</span>, </span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>                    <span class="at">col_types =</span> <span class="st">"ccdd"</span>)</span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p><a href="https://www.city.tokushima.tokushima.jp/zoo/index.html">とくしま動物園</a>で飼育される 22種の動物（2016年4月1日時点の情報）について体の大きさ（体長 cm）と体重（kg）をデータセット化したものです。 体長と体重については各動物のWikipediaのページを参照して記録しています。 原則として、各種の体長および体重の最大値を記録しています。 適当な値の記載がなかった項目については欠損値を与えています。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df_zoo</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["taxon"],"name":[1],"type":["chr"],"align":["left"]},{"label":["name"],"name":[2],"type":["chr"],"align":["left"]},{"label":["body_length_cm"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["weight_kg"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"食肉類","2":"レッサーパンダ","3":"63.5","4":"6.0"},{"1":"鳥類","2":"ホオジロカンムリヅル","3":"100.0","4":"3.5"},{"1":"食肉類","2":"コツメカワウソ","3":"64.0","4":"5.4"},{"1":"鳥類","2":"カナダガン","3":"110.0","4":"6.5"},{"1":"霊長類","2":"チンパンジー","3":"85.0","4":"60.0"},{"1":"霊長類","2":"シシオザル","3":"66.0","4":"10.0"},{"1":"霊長類","2":"マントヒヒ","3":"80.0","4":"20.0"},{"1":"食肉類","2":"ピューマ","3":"168.0","4":"80.0"},{"1":"齧歯類","2":"カピバラ","3":"134.0","4":"66.0"},{"1":"食肉類","2":"ライオン","3":"250.0","4":"225.0"},{"1":"鳥類","2":"アフリカハゲコウ","3":"130.0","4":"9.0"},{"1":"偶蹄類","2":"シロオリックス","3":"175.0","4":"220.0"},{"1":"食肉類","2":"ミーアキャット","3":"31.0","4":"0.9"},{"1":"食肉類","2":"シンリンオオカミ","3":"NA","4":"30.3"},{"1":"鳥類","2":"アンデスコンドル","3":"1.2","4":"15.0"},{"1":"食肉類","2":"ホッキョクグマ","3":"250.0","4":"410.0"},{"1":"霊長類","2":"リスザル","3":"35.0","4":"1.1"},{"1":"鳥類","2":"フンボルトペンギン","3":"69.0","4":"6.0"},{"1":"鯨偶蹄類","2":"ラマ","3":"NA","4":"140.0"},{"1":"奇蹄類","2":"ポニー","3":"NA","4":"NA"},{"1":"齧歯類","2":"モルモット","3":"40.0","4":"1.5"},{"1":"鯨偶蹄類","2":"ヒツジ","3":"NA","4":"NA"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>このデータは<i class="fa-brands fa-github" aria-label="github"></i> <a href="https://github.com/uribo/tokupon_ds">GitHubリポジトリ</a>に保存してあります。</p>
+<p>https://github.com/uribo/tokupon_ds/blob/main/data-raw/tokushima_zoo_animals22.csv</p>
+</section>
+<section id="とくしま動物園で飼育される動物の保全状況と生息地" class="level2" data-number="B.4">
+<h2 data-number="B.4" class="anchored" data-anchor-id="とくしま動物園で飼育される動物の保全状況と生息地"><span class="header-section-number">B.4</span> とくしま動物園で飼育される動物の保全状況と生息地</h2>
+<ul>
+<li>名称: <strong>動物保全状況データ</strong></li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>コードを表示</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-overflow-scroll code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>df_zoo_name <span class="ot">&lt;-</span> </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="fu">c</span>(<span class="st">"レッサーパンダ"</span>, <span class="st">"ホオジロカンムリヅル"</span>, </span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>             <span class="st">"コツメカワウソ"</span>, <span class="st">"カナダガン"</span>, <span class="st">"チンパンジー"</span>, </span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>             <span class="st">"シシオザル"</span>, <span class="st">"マントヒヒ"</span>, <span class="st">"ピューマ"</span>, <span class="st">"カピバラ"</span>, </span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>             <span class="st">"ライオン"</span>, <span class="st">"アフリカハゲコウ"</span>, <span class="st">"シロオリックス"</span>, </span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>             <span class="st">"ミーアキャット"</span>, <span class="st">"シンリンオオカミ"</span>, <span class="st">"アンデスコンドル"</span>, </span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>             <span class="st">"ホッキョクグマ"</span>, <span class="st">"リスザル"</span>, <span class="st">"フンボルトペンギン"</span>, </span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>             <span class="st">"ラマ"</span>, <span class="st">"ポニー"</span>, <span class="st">"モルモット"</span>, <span class="st">"ヒツジ"</span>),</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">scientific_name =</span> <span class="fu">c</span>(<span class="st">"Ailurus fulgens"</span>, <span class="st">"Balearica regulorum"</span>, </span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"Aonyx cinerea"</span>, <span class="st">"Branta canadensis"</span>, <span class="st">"Pan troglodytes"</span>,</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"Macaca silenus"</span>, <span class="st">"Papio hamadryas"</span>, <span class="st">"Puma concolor"</span>, </span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"Hydrochoerus hydrochaeris"</span>, <span class="st">"Panthera leo"</span>,</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"Leptoptilos crumeniferus"</span>, <span class="st">"Oryx dammah"</span>, <span class="st">"Suricata suricatta"</span>, </span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"Canis lupus"</span>, <span class="st">"Vultur gryphus"</span>,</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"Ursus maritimus"</span>, <span class="cn">NA_character_</span>, <span class="st">"Spheniscus humboldti"</span>,</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"Lama glama"</span>, <span class="cn">NA_character_</span>,</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"Cavia porcellus"</span>, <span class="st">"Ovis aries"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">link =</span> <span class="fu">paste0</span>(<span class="st">"https://ja.wikipedia.org/wiki/"</span>,</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>                              dplyr<span class="sc">::</span><span class="fu">recode</span>(name,</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>                              <span class="st">`</span><span class="at">アンデスコンドル</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"コンドル"</span>,</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>                              <span class="st">`</span><span class="at">ラマ</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"リャマ"</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(scientific_name)) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>  assertr<span class="sc">::</span><span class="fu">verify</span>(<span class="fu">dim</span>(.) <span class="sc">==</span> <span class="fu">c</span>(<span class="dv">20</span>, <span class="dv">3</span>))</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">file.exists</span>(<span class="st">"data-raw/tokushima_zoo_animals_conservation_status.rds"</span>) <span class="sc">==</span> <span class="cn">FALSE</span>) {</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(rredlist)</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>  animal_scname <span class="ot">&lt;-</span> </span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>    df_zoo_name <span class="sc">|&gt;</span> </span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>    purrr<span class="sc">::</span><span class="fu">pluck</span>(<span class="st">"scientific_name"</span>)</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">file.exists</span>(<span class="st">"data-raw/redlist_search_raw.rds"</span>) <span class="sc">==</span> <span class="cn">FALSE</span>) {</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>    result_red_list_search <span class="ot">&lt;-</span></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>      animal_scname <span class="sc">|&gt;</span> </span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>      purrr<span class="sc">::</span><span class="fu">map_dfr</span>(</span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>        <span class="sc">~</span> tibble<span class="sc">::</span><span class="fu">as_tibble</span>(purrr<span class="sc">::</span><span class="fu">pluck</span>(rredlist<span class="sc">::</span><span class="fu">rl_search</span>(<span class="at">name =</span> .x), </span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>                                         <span class="st">"result"</span>)))</span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>    result_red_list_search <span class="sc">|&gt;</span> </span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>      readr<span class="sc">::</span><span class="fu">write_rds</span>(<span class="st">"data-raw/redlist_search_raw.rds"</span>)    </span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>    result_red_list_search <span class="ot">&lt;-</span></span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>      readr<span class="sc">::</span><span class="fu">read_rds</span>(<span class="st">"data-raw/redlist_search_raw.rds"</span>)</span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">file.exists</span>(<span class="st">"data-raw/redlist_occ_country_raw.rds"</span>) <span class="sc">==</span> <span class="cn">FALSE</span>) {</span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a>    result_red_list_occ <span class="ot">&lt;-</span> </span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>      animal_scname <span class="sc">|&gt;</span> </span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a>      purrr<span class="sc">::</span><span class="fu">set_names</span>(animal_scname) <span class="sc">|&gt;</span></span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a>      purrr<span class="sc">::</span><span class="fu">map_dfr</span>(<span class="sc">~</span> tibble<span class="sc">::</span><span class="fu">as_tibble</span>(purrr<span class="sc">::</span><span class="fu">pluck</span>(rredlist<span class="sc">::</span><span class="fu">rl_occ_country</span>(<span class="at">name =</span> .x), </span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a>                                                      <span class="st">"result"</span>)),</span>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a>                     <span class="at">.id =</span> <span class="st">"scientific_name"</span>)</span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a>    result_red_list_occ <span class="sc">|&gt;</span> </span>
+<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a>      readr<span class="sc">::</span><span class="fu">write_rds</span>(<span class="st">"data-raw/redlist_occ_country_raw.rds"</span>)</span>
+<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a>    result_red_list_occ <span class="ot">&lt;-</span> </span>
+<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a>      readr<span class="sc">::</span><span class="fu">read_rds</span>(<span class="st">"data-raw/redlist_occ_country_raw.rds"</span>)</span>
+<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a>  result_red_list_occ <span class="ot">&lt;-</span> </span>
+<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a>    result_red_list_occ <span class="sc">|&gt;</span> </span>
+<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">!</span><span class="fu">c</span>(distribution_code)) <span class="sc">|&gt;</span> </span>
+<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a>    tidyr<span class="sc">::</span><span class="fu">nest</span>(<span class="at">occ =</span> <span class="fu">c</span>(code, country, presence, origin))</span>
+<span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a>  df_red_list_information <span class="ot">&lt;-</span></span>
+<span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a>    result_red_list_search <span class="sc">|&gt;</span></span>
+<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(</span>
+<span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a>      taxonid,</span>
+<span id="cb6-67"><a href="#cb6-67" aria-hidden="true" tabindex="-1"></a>      scientific_name,</span>
+<span id="cb6-68"><a href="#cb6-68" aria-hidden="true" tabindex="-1"></a>      main_common_name,</span>
+<span id="cb6-69"><a href="#cb6-69" aria-hidden="true" tabindex="-1"></a>      category,</span>
+<span id="cb6-70"><a href="#cb6-70" aria-hidden="true" tabindex="-1"></a>      population_trend,</span>
+<span id="cb6-71"><a href="#cb6-71" aria-hidden="true" tabindex="-1"></a>      tidyselect<span class="sc">::</span><span class="fu">ends_with</span>(<span class="st">"_system"</span>),</span>
+<span id="cb6-72"><a href="#cb6-72" aria-hidden="true" tabindex="-1"></a>      tidyselect<span class="sc">::</span><span class="fu">starts_with</span>(<span class="st">"elevation_"</span>),</span>
+<span id="cb6-73"><a href="#cb6-73" aria-hidden="true" tabindex="-1"></a>      tidyselect<span class="sc">::</span><span class="fu">starts_with</span>(<span class="st">"depth_"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb6-74"><a href="#cb6-74" aria-hidden="true" tabindex="-1"></a>    tidyr<span class="sc">::</span><span class="fu">nest</span>(<span class="at">ecosystem =</span> tidyselect<span class="sc">::</span><span class="fu">ends_with</span>(<span class="st">"_system"</span>),</span>
+<span id="cb6-75"><a href="#cb6-75" aria-hidden="true" tabindex="-1"></a>                <span class="at">limitation =</span> <span class="fu">c</span>(tidyselect<span class="sc">::</span><span class="fu">ends_with</span>(<span class="st">"upper"</span>), tidyselect<span class="sc">::</span><span class="fu">ends_with</span>(<span class="st">"lower"</span>))) <span class="sc">|&gt;</span></span>
+<span id="cb6-76"><a href="#cb6-76" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">left_join</span>(result_red_list_occ, <span class="at">by =</span> <span class="st">"scientific_name"</span>)</span>
+<span id="cb6-77"><a href="#cb6-77" aria-hidden="true" tabindex="-1"></a>  df_zoo_conservation <span class="ot">&lt;-</span> </span>
+<span id="cb6-78"><a href="#cb6-78" aria-hidden="true" tabindex="-1"></a>    df_zoo_name <span class="sc">|&gt;</span> </span>
+<span id="cb6-79"><a href="#cb6-79" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">!</span>link) <span class="sc">|&gt;</span> </span>
+<span id="cb6-80"><a href="#cb6-80" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">left_join</span>(df_red_list_information, <span class="at">by =</span> <span class="st">"scientific_name"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-81"><a href="#cb6-81" aria-hidden="true" tabindex="-1"></a>    assertr<span class="sc">::</span><span class="fu">verify</span>(<span class="fu">dim</span>(.) <span class="sc">==</span> <span class="fu">c</span>(<span class="dv">20</span>, <span class="dv">9</span>))</span>
+<span id="cb6-82"><a href="#cb6-82" aria-hidden="true" tabindex="-1"></a>  df_zoo_conservation <span class="sc">|&gt;</span> </span>
+<span id="cb6-83"><a href="#cb6-83" aria-hidden="true" tabindex="-1"></a>    readr<span class="sc">::</span><span class="fu">write_rds</span>(<span class="st">"data-raw/tokushima_zoo_animals_conservation_status.rds"</span>)</span>
+<span id="cb6-84"><a href="#cb6-84" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb6-85"><a href="#cb6-85" aria-hidden="true" tabindex="-1"></a>  df_zoo_conservation <span class="ot">&lt;-</span></span>
+<span id="cb6-86"><a href="#cb6-86" aria-hidden="true" tabindex="-1"></a>    readr<span class="sc">::</span><span class="fu">read_rds</span>(<span class="st">"data-raw/tokushima_zoo_animals_conservation_status.rds"</span>)</span>
+<span id="cb6-87"><a href="#cb6-87" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>動物データのうち、生物種名（学名）が判別可能な20種についての生息地とその保全状況を 示すデータセットです。<a href="https://www.iucn.org">国際自然保護連合(IUCN)</a>が指定する<a href="https://www.iucnredlist.org">IUCNレッドリスト</a>からデータを取得しています。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df_zoo_conservation</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["scientific_name"],"name":[2],"type":["chr"],"align":["left"]},{"label":["taxonid"],"name":[3],"type":["int"],"align":["right"]},{"label":["main_common_name"],"name":[4],"type":["chr"],"align":["left"]},{"label":["category"],"name":[5],"type":["chr"],"align":["left"]},{"label":["population_trend"],"name":[6],"type":["chr"],"align":["left"]},{"label":["ecosystem"],"name":[7],"type":["list"],"align":["right"]},{"label":["limitation"],"name":[8],"type":["list"],"align":["right"]},{"label":["occ"],"name":[9],"type":["list"],"align":["right"]}],"data":[{"1":"レッサーパンダ","2":"Ailurus fulgens","3":"714","4":"Red Panda","5":"EN","6":"Decreasing","7":"<tibble[,3]>","8":"<tibble[,4]>","9":"<tibble[,4]>"},{"1":"ホオジロカンムリヅル","2":"Balearica regulorum","3":"22692046","4":"Grey Crowned Crane","5":"EN","6":"Decreasing","7":"<tibble[,3]>","8":"<tibble[,4]>","9":"<tibble[,4]>"},{"1":"コツメカワウソ","2":"Aonyx cinerea","3":"NA","4":"NA","5":"NA","6":"NA","7":"<NULL>","8":"<NULL>","9":"<NULL>"},{"1":"カナダガン","2":"Branta canadensis","3":"22679935","4":"Canada Goose","5":"LC","6":"Increasing","7":"<tibble[,3]>","8":"<tibble[,4]>","9":"<tibble[,4]>"},{"1":"チンパンジー","2":"Pan troglodytes","3":"15933","4":"Chimpanzee","5":"EN","6":"Decreasing","7":"<tibble[,3]>","8":"<tibble[,4]>","9":"<tibble[,4]>"},{"1":"シシオザル","2":"Macaca silenus","3":"12559","4":"Lion-tailed Macaque","5":"EN","6":"Decreasing","7":"<tibble[,3]>","8":"<tibble[,4]>","9":"<tibble[,4]>"},{"1":"マントヒヒ","2":"Papio hamadryas","3":"16019","4":"Hamadryas Baboon","5":"LC","6":"Increasing","7":"<tibble[,3]>","8":"<tibble[,4]>","9":"<tibble[,4]>"},{"1":"ピューマ","2":"Puma concolor","3":"18868","4":"Puma","5":"LC","6":"Decreasing","7":"<tibble[,3]>","8":"<tibble[,4]>","9":"<tibble[,4]>"},{"1":"カピバラ","2":"Hydrochoerus hydrochaeris","3":"10300","4":"Capybara","5":"LC","6":"Stable","7":"<tibble[,3]>","8":"<tibble[,4]>","9":"<tibble[,4]>"},{"1":"ライオン","2":"Panthera leo","3":"15951","4":"Lion","5":"VU","6":"Decreasing","7":"<tibble[,3]>","8":"<tibble[,4]>","9":"<tibble[,4]>"},{"1":"アフリカハゲコウ","2":"Leptoptilos crumeniferus","3":"NA","4":"NA","5":"NA","6":"NA","7":"<NULL>","8":"<NULL>","9":"<NULL>"},{"1":"シロオリックス","2":"Oryx dammah","3":"15568","4":"Scimitar-horned Oryx","5":"EW","6":"NA","7":"<tibble[,3]>","8":"<tibble[,4]>","9":"<tibble[,4]>"},{"1":"ミーアキャット","2":"Suricata suricatta","3":"41624","4":"Meerkat","5":"LC","6":"Stable","7":"<tibble[,3]>","8":"<tibble[,4]>","9":"<tibble[,4]>"},{"1":"シンリンオオカミ","2":"Canis lupus","3":"3746","4":"Grey Wolf","5":"LC","6":"Stable","7":"<tibble[,3]>","8":"<tibble[,4]>","9":"<tibble[,4]>"},{"1":"アンデスコンドル","2":"Vultur gryphus","3":"22697641","4":"Andean Condor","5":"VU","6":"Decreasing","7":"<tibble[,3]>","8":"<tibble[,4]>","9":"<tibble[,4]>"},{"1":"ホッキョクグマ","2":"Ursus maritimus","3":"22823","4":"Polar Bear","5":"VU","6":"Unknown","7":"<tibble[,3]>","8":"<tibble[,4]>","9":"<tibble[,4]>"},{"1":"フンボルトペンギン","2":"Spheniscus humboldti","3":"22697817","4":"Humboldt Penguin","5":"VU","6":"Decreasing","7":"<tibble[,3]>","8":"<tibble[,4]>","9":"<tibble[,4]>"},{"1":"ラマ","2":"Lama glama","3":"NA","4":"NA","5":"NA","6":"NA","7":"<NULL>","8":"<NULL>","9":"<NULL>"},{"1":"モルモット","2":"Cavia porcellus","3":"NA","4":"NA","5":"NA","6":"NA","7":"<NULL>","8":"<NULL>","9":"<NULL>"},{"1":"ヒツジ","2":"Ovis aries","3":"NA","4":"NA","5":"NA","6":"NA","7":"<NULL>","8":"<NULL>","9":"<NULL>"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "コピーしました");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "コピーしました");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./exercise.html" class="pagination-link" aria-label="練習問題の答えと解説">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">練習問題の答えと解説</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","loop":false,"descPosition":"bottom","openEffect":"zoom","selector":".lightbox"});
+window.onload = () => {
+  lightboxQuarto.on('slide_before_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    const href = trigger.getAttribute('href');
+    if (href !== null) {
+      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+      if (imgEl !== null) {
+        const srcAttr = imgEl.getAttribute("src");
+        if (srcAttr && srcAttr.startsWith("data:")) {
+          slideConfig.href = srcAttr;
+        }
+      }
+    } 
+  });
+
+  lightboxQuarto.on('slide_after_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    if (window.Quarto?.typesetMath) {
+      window.Quarto.typesetMath(slideNode);
+    }
+  });
+
+};
+          </script>
+
+
+
+
+</body></html>
