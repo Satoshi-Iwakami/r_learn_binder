@@ -1,0 +1,69 @@
+---
+title: "データセット"
+df-print: paged
+---
+
+## 南極大陸に生育するペンギンの大きさについての観測データ
+
+```{r}
+library(palmerpenguins)
+penguins
+```
+
+## 令和2年度 学校保健統計調査 都道府県別の身長・体重の平均値及び標準偏差
+
+e-Statで公開されている[ファイル](https://www.e-stat.go.jp/stat-search/files?page=1&layout=datalist&toukei=00400002&tstat=000001011648&cycle=0&tclass1=000001156246&tclass2=000001156248&stat_infid=000032108465&tclass3val=0)をRで処理しました。
+
+```{r}
+#| code-overflow: scroll
+#| file: "data-raw/hoken_toukei.R"
+```
+
+```{r}
+#| code-fold: false
+df_hoken_toukei
+```
+
+## とくしま動物園で飼育される動物の体の大きさと体重
+
+![](images/animal_silhouette.png)
+
+- 名称: **動物データ**
+
+```{r}
+#| code-overflow: scroll
+#| file: "data-raw/zoo.R"
+```
+
+[とくしま動物園](https://www.city.tokushima.tokushima.jp/zoo/index.html)で飼育される
+22種の動物（2016年4月1日時点の情報）について体の大きさ（体長 cm）と体重（kg）をデータセット化したものです。
+体長と体重については各動物のWikipediaのページを参照して記録しています。
+原則として、各種の体長および体重の最大値を記録しています。
+適当な値の記載がなかった項目については欠損値を与えています。
+
+```{r}
+#| code-fold: false
+df_zoo
+```
+
+このデータは{{< fa brands github >}} [GitHubリポジトリ](https://github.com/uribo/tokupon_ds)に保存してあります。
+
+https://github.com/uribo/tokupon_ds/blob/main/data-raw/tokushima_zoo_animals22.csv
+
+## とくしま動物園で飼育される動物の保全状況と生息地
+
+- 名称: **動物保全状況データ**
+
+```{r}
+#| code-overflow: scroll
+#| file: "data-raw/zoo_conservation.R"
+```
+
+動物データのうち、生物種名（学名）が判別可能な`r nrow(df_zoo_name)`種についての生息地とその保全状況を
+示すデータセットです。[国際自然保護連合(IUCN)](https://www.iucn.org)が指定する[IUCNレッドリスト](https://www.iucnredlist.org)からデータを取得しています。
+
+```{r}
+#| code-fold: false
+df_zoo_conservation
+```
+
