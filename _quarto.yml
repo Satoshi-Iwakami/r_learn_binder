@@ -14,6 +14,9 @@ book:
         - summary_statistics.qmd
         - correlation.qmd
         - visualization.qmd
+  appendices:
+    - exercise.qmd
+    - dataset.qmd
   site-url: https://iwasatoquokka.github.io/r_learn_binder/
   repo-url: https://github.com/iwasatoquokka/r_learn_binder
 
