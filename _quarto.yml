@@ -14,6 +14,10 @@ book:
         - summary_statistics.qmd
         - correlation.qmd
         - visualization.qmd
+    - part: "発展"
+      chapters:
+        - regression.qmd
+        - classification.qmd
   appendices:
     - exercise.qmd
     - dataset.qmd

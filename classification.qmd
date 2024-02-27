@@ -1,0 +1,27 @@
+---
+title: "分類問題に挑戦"
+---
+
+```{r}
+library(dplyr)
+```
+
+```{r}
+#| include: false
+#| file: "data-raw/zoo.R"
+```
+
+
+## ロジスティック回帰
+
+## 主成分分析
+
+
+```{r}
+subset(df_zoo, select = c(body_length_cm, weight_kg)) |> 
+  dplyr::filter(!is.na(body_length_cm)) |> 
+  prcomp(scale. = TRUE)
+```
+
+
+## クラスタリング
